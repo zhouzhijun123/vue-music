@@ -1,13 +1,17 @@
 <template>
-  <div>app</div>
+  <div id="app">
+    <top />
+  </div>
 </template>
 
 <script>
+import top from '@/components/top'
 export default {
-  name:'app'
-}
+  name: 'app',
+  components:{
+    top
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
