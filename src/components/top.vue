@@ -1,5 +1,5 @@
 <template>
-  <div class="top">
+  <div class="top-container">
     <div class="left-box">
       <div class="icon-wrapper">
         <span class="iconfont icon-home"></span>
@@ -31,12 +31,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.top {
+.top-container {
   display: flex;
   justify-content: space-between;
-  height: 60px;
-  border-bottom: 1px solid #000;
   padding: 0 20px;
+  background-color:#f9f9f9;
+  width: 100%;
   .left-box {
     display: flex;
     // 图标
