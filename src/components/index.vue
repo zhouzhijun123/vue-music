@@ -2,25 +2,25 @@
   <div class="index-container">
     <div class="nav">
       <ul>
-        <li @click="activeIndex = 0" :class="{ active: activeIndex == 0 }">
+        <li>
           <router-link to="/discovery">
             <span class="iconfont icon-find-music"></span>
             发现音乐
           </router-link>
         </li>
-        <li @click="activeIndex = 1" :class="{ active: activeIndex == 1 }">
+        <li>
           <router-link to="/playlists">
             <span class="iconfont icon-music-list"></span>
             推荐歌单
           </router-link>
         </li>
-        <li @click="activeIndex = 2" :class="{ active: activeIndex == 2 }">
+        <li>
           <router-link to="/songs">
             <span class="iconfont icon-music"></span>
             最新音乐
           </router-link>
         </li>
-        <li @click="activeIndex = 3" :class="{ active: activeIndex == 3 }">
+        <li>
           <router-link to="/mvs">
             <span class="iconfont icon-mv"></span>
             最新MV
@@ -53,7 +53,7 @@ export default {
   display: flex;
   .nav {
     background-color: #ededed;
-    width: 300px;
+    width: 200px;
     height: 100%;
     li {
       height: 60px;
@@ -74,13 +74,11 @@ export default {
         line-height: 60px;
         width: 100%;
         height: 100%;
-      }
-      &.active {
-        a {
+        &.router-link-active {
           color: #dd6d60;
-        }
-        .iconfont {
-          color: #dd6d60;
+          .iconfont {
+            color: #dd6d60;
+          }
         }
       }
     }
@@ -88,6 +86,11 @@ export default {
   .main {
     flex: 1;
     overflow-y: scroll;
+    padding: 10px 20px;
+    > div {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
   }
   .player {
     background: #f1f3f4;

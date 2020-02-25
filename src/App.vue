@@ -30,6 +30,8 @@ export default {
   .index-container {
     height: 100%;
     padding-top: 60px;
+    padding-bottom: 60px;
+   
   }
 }
 </style>
