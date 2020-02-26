@@ -72,23 +72,25 @@
       </el-tab-pane>
       <el-tab-pane label="评论(66)" name="2">
         <!-- 精彩评论 -->
-        <div class="comment-wrap">
+        <div v-if="hotComments.length != 0" class="comment-wrap">
           <p class="title">精彩评论<span class="number">(666)</span></p>
-          <div class="comments-wrap">
+          <div class="comments-wrap" v-for="item in hotComments" :key="item.commentId">
             <div class="item">
               <div class="icon-wrap">
-                <img src="../assets/avatar.jpg" alt="" />
+                <img :src="item.user.avatarUrl" alt="" />
               </div>
               <div class="content-wrap">
                 <div class="content">
-                  <span class="name">爱斯基摩：</span>
-                  <span class="comment">谁说的，长大了依旧可爱哈</span>
+                  <span class="name">{{ item.user.nickname }}：</span>
+                  <span class="comment">{{ item.content }}</span>
                 </div>
-                <div class="re-content">
-                  <span class="name">小苹果：</span>
-                  <span class="comment">还是小时候比较可爱</span>
+                <div v-if="item.beReplied.length != 0" class="re-content">
+                  <span class="name"
+                    >{{ item.beReplied[0].user.nickname }}：</span
+                  >
+                  <span class="comment">{{ item.beReplied[0].content }}</span>
                 </div>
-                <div class="date">2020-02-12 17:26:11</div>
+                <div class="date">{{ item.time | formatTime }}</div>
               </div>
             </div>
           </div>
@@ -153,7 +155,7 @@
 </template>
 
 <script>
-import { playlistDetail } from '@/api/playlist';
+import { playlistDetail, hotComments } from '@/api/playlist';
 import { songUrl } from '@/api/discovery';
 import moment from 'moment';
 export default {
@@ -168,7 +170,10 @@ export default {
       signature: '',
       nickname: '',
       tags: [],
-      createTime: ''
+      createTime: '',
+      // 热门评论
+      hotComments: [],
+      // 普通评论
     };
   },
   filters: {
@@ -180,6 +185,9 @@ export default {
       let sec = Math.ceil((dt / 1000) % 60);
       sec = sec < 10 ? '0' + sec : sec;
       return min + ':' + sec;
+    },
+    formatTime(time) {
+      return moment(time).format('YYYY-MM-DD hh:mm:ss');
     }
   },
   created() {
@@ -197,6 +205,12 @@ export default {
       this.nickname = res.playlist.creator.nickname;
       this.tags = res.playlist.tags;
       this.createTime = moment(res.playlist.createTime).format('YYYY-MM-DD');
+    });
+    hotComments({
+      id
+    }).then(res => {
+      // window.console.log(res)
+      this.hotComments = res.hotComments;
     });
   },
   methods: {
