@@ -12,17 +12,16 @@
         推荐歌单
       </h3>
       <div class="items">
-        <div class="item" v-for="item in playList" :key='item.id'>
+        <div class="item" v-for="item in playList" :key="item.id">
           <div class="img-wrap">
             <div class="desc-wrap">
-              <span class="desc">{{item.copywriter}}</span>
+              <span class="desc">{{ item.copywriter }}</span>
             </div>
             <img :src="item.picUrl" alt="" />
             <span class="iconfont icon-play"></span>
           </div>
-          <p class="name">{{item.name}}</p>
+          <p class="name">{{ item.name }}</p>
         </div>
-
       </div>
     </div>
     <!-- 最新音乐 -->
@@ -31,114 +30,15 @@
         最新音乐
       </h3>
       <div class="items">
-        <div class="item">
-          <span class="index">01</span>
+        <div class="item" v-for="(item, index) in newsong" :key="item.id">
+          <span class="index">{{ index + 1 }}</span>
           <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
+            <img :src="item.picUrl" alt="" />
             <span class="iconfont icon-play"></span>
           </div>
           <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
-          </div>
-        </div>
-        <div class="item">
-          <span class="index">01</span>
-          <div class="img-wrap">
-            <img src="../assets/songCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <div class="song-wrap">
-            <div class="song-name">小王日记</div>
-            <div class="singer">毛不易</div>
+            <div class="song-name">{{ item.name }}</div>
+            <div class="singer">{{ item.song.artists[0].name }}</div>
           </div>
         </div>
       </div>
@@ -209,7 +109,7 @@
 </template>
 
 <script>
-import { banner, personalized } from '@/api/discovery';
+import { banner, songlist, newsong } from '@/api/discovery';
 export default {
   name: 'discovery',
   data() {
@@ -217,16 +117,22 @@ export default {
       // 轮播图
       banners: [],
       // 歌单
-      playList: []
+      playList: [],
+      // 新歌
+      newsong: []
     };
   },
   created() {
     banner().then(res => {
       this.banners = res.banners;
     });
-    personalized().then(res => {
+    songlist().then(res => {
       // window.console.log(res)
       this.playList = res.result;
+    });
+    newsong().then(res => {
+      // window.console.log(res)
+      this.newsong = res.result;
     });
   }
 };
@@ -263,7 +169,7 @@ export default {
           height: 200px;
           border-radius: 5px;
         }
-          .desc-wrap {
+        .desc-wrap {
           position: absolute;
           width: 100%;
           top: 0;
@@ -279,8 +185,8 @@ export default {
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           top: -50px;
-          span{
-            font-size:14px;
+          span {
+            font-size: 14px;
           }
         }
         &:hover .desc-wrap {
@@ -383,7 +289,8 @@ export default {
           .song-name {
           }
           .singer {
-            font-size: 15px;
+            font-size: 14px;
+            color: gray;
           }
         }
       }
