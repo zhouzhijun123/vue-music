@@ -13,7 +13,7 @@
       </h3>
       <div class="items">
         <div class="item" v-for="item in playList" :key="item.id">
-          <div class="img-wrap">
+          <div class="img-wrap" @click="toPlayList(item.id)">
             <div class="desc-wrap">
               <span class="desc">{{ item.copywriter }}</span>
             </div>
@@ -100,6 +100,10 @@ export default {
     })
   },
   methods:{
+    
+    toPlayList(id){
+      this.$router.push(`/playlist?id=${id}`)
+    },
     playMusic(id){
       songUrl({
         id:id
@@ -169,6 +173,7 @@ export default {
         }
         .img-wrap {
           position: relative;
+          cursor: pointer;
           .icon-play {
             position: absolute;
             right: 10px;
