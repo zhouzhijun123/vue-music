@@ -2,14 +2,14 @@
   <div class="playlist-container">
     <div class="top-wrap">
       <div class="img-wrap">
-        <img src="../assets/playListCover.jpg" alt="" />
+        <img :src="coverImgUrl" alt="" />
       </div>
       <div class="info-wrap">
-        <p class="title">俗世里的烟火气|总有些瞬间 让你热泪盈眶</p>
+        <p class="title">{{ title }}</p>
         <div class="author-wrap">
-          <img class="avatar" src="../assets/avatar.jpg" alt="" />
-          <span class="name">原创君</span>
-          <span class="time">2020-2-26 创建</span>
+          <img class="avatar" :src="avatarUrl" alt="" />
+          <span class="name">{{ nickname }}</span>
+          <span class="time">{{ createTime }} 创建</span>
         </div>
         <div class="play-wrap">
           <span class="iconfont icon-circle-play"></span>
@@ -18,19 +18,12 @@
         <div class="tag-wrap">
           <span class="title">标签:</span>
           <ul>
-            <li>华语</li>
-            <li>怀旧</li>
-            <li>感动</li>
+            <li v-for="item in tags" :key="item">{{ item }}</li>
           </ul>
         </div>
         <div class="desc-wrap">
           <span class="title">简介:</span>
-          <span class="desc"
-            >你是否曾在某个瞬间 被一次日落击中心中最柔软的部分 曾在回家途中
-            被袅袅升起的饭菜香味感动得热泪盈眶？ 生活或许有时不尽如人意
-            却总有一些叫“烟火气”的东西 使得我们在这个俗世中 依然保持希望
-            封面来自网络</span
-          >
+          <span class="desc">{{ signature }}</span>
         </div>
       </div>
     </div>
@@ -161,13 +154,21 @@
 
 <script>
 import { playlistDetail } from '@/api/playlist';
-import {songUrl} from '@/api/discovery';
+import { songUrl } from '@/api/discovery';
+import moment from 'moment';
 export default {
   name: 'playlist',
   data() {
     return {
       activeIndex: '1',
-      tableData: []
+      tableData: [],
+      title: '',
+      avatarUrl: '',
+      coverImgUrl: '',
+      signature: '',
+      nickname: '',
+      tags: [],
+      createTime: ''
     };
   },
   filters: {
@@ -189,6 +190,13 @@ export default {
       // window.console.log(res)
       // 歌曲信息
       this.tableData = res.playlist.tracks;
+      this.title = res.playlist.name;
+      this.avatarUrl = res.playlist.creator.avatarUrl;
+      this.coverImgUrl = res.playlist.coverImgUrl;
+      this.signature = res.playlist.creator.signature;
+      this.nickname = res.playlist.creator.nickname;
+      this.tags = res.playlist.tags;
+      this.createTime = moment(res.playlist.createTime).format('YYYY-MM-DD');
     });
   },
   methods: {
