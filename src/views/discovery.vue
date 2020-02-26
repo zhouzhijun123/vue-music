@@ -2,8 +2,8 @@
   <div class="discovery-container">
     <!-- 轮播图 -->
     <el-carousel class="" :interval="4000" type="card">
-      <el-carousel-item v-for="item in 6" :key="item">
-        <img src="../assets/banner.jpg" alt="" />
+      <el-carousel-item v-for="(item, index) in banners" :key="index">
+        <img :src="item.imageUrl" alt="" />
       </el-carousel-item>
     </el-carousel>
     <!-- 推荐歌单 -->
@@ -12,106 +12,17 @@
         推荐歌单
       </h3>
       <div class="items">
-        <div class="item">
+        <div class="item" v-for="item in playList" :key='item.id'>
           <div class="img-wrap">
             <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
+              <span class="desc">{{item.copywriter}}</span>
             </div>
-            <img src="../assets/cover.jpg" alt="" />
+            <img :src="item.picUrl" alt="" />
             <span class="iconfont icon-play"></span>
           </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
+          <p class="name">{{item.name}}</p>
         </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <div class="desc-wrap">
-              <span class="desc">编辑推荐：一起探索这个未知的音乐罐头吧！</span>
-            </div>
-            <img src="../assets/cover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-          </div>
-          <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-        </div>
+
       </div>
     </div>
     <!-- 最新音乐 -->
@@ -298,13 +209,25 @@
 </template>
 
 <script>
-import { banner } from '@/api/discovery';
+import { banner, personalized } from '@/api/discovery';
 export default {
   name: 'discovery',
-  created(){
-    banner().then(res=>{
-      window.console.log(res)
-    })
+  data() {
+    return {
+      // 轮播图
+      banners: [],
+      // 歌单
+      playList: []
+    };
+  },
+  created() {
+    banner().then(res => {
+      this.banners = res.banners;
+    });
+    personalized().then(res => {
+      // window.console.log(res)
+      this.playList = res.result;
+    });
   }
 };
 </script>
