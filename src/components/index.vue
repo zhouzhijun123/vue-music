@@ -32,7 +32,7 @@
       <router-view></router-view>
     </div>
     <div class="player">
-      <audio controls></audio>
+      <audio controls autoplay :src="url" loop></audio>
     </div>
   </div>
 </template>
@@ -42,7 +42,8 @@ export default {
   name: 'index',
   data() {
     return {
-      activeIndex: 0
+      activeIndex: 0,
+      url:""
     };
   }
 };

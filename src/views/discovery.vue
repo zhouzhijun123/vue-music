@@ -34,7 +34,7 @@
           <span class="index">{{ index + 1 }}</span>
           <div class="img-wrap">
             <img :src="item.picUrl" alt="" />
-            <span class="iconfont icon-play"></span>
+            <span @click="playMusic(item.id)" class="iconfont icon-play"></span>
           </div>
           <div class="song-wrap">
             <div class="song-name">{{ item.name }}</div>
@@ -61,14 +61,13 @@
             <div class="singer">{{item.artistName}}</div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { banner, songlist, newsong,mv } from '@/api/discovery';
+import { banner, songlist, newsong,mv,songUrl } from '@/api/discovery';
 export default {
   name: 'discovery',
   data() {
@@ -80,7 +79,9 @@ export default {
       // 新歌
       newsong: [],
       // mv
-      mv:[]
+      mv:[],
+      // 歌曲url
+      songUrl:""
     };
   },
   created() {
@@ -97,6 +98,17 @@ export default {
     mv().then(res=>{
       this.mv = res.result
     })
+  },
+  methods:{
+    playMusic(id){
+      songUrl({
+        id:id
+      }).then(res=>{
+        // window.console.log(res)
+        // this.songUrl = res.data[0].url
+        this.$parent.url = res.data[0].url
+      })
+    }
   }
 };
 </script>
@@ -108,7 +120,7 @@ export default {
   }
   .el-carousel__item img {
     width: 100%;
-    height: 100%;
+    // height: 100%;
     border-radius: 10px;
   }
   .title {
