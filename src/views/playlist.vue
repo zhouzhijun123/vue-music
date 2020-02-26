@@ -1,28 +1,387 @@
 <template>
-  <div class='playlist-container'>
+  <div class="playlist-container">
     <div class="top-wrap">
-      <div class="img-wrap"></div>
+      <div class="img-wrap">
+        <img src="../assets/playListCover.jpg" alt="" />
+      </div>
       <div class="info-wrap">
-        <h4 class='title'>俗世里的烟火气|总有些瞬间 让你热泪盈眶</h4>
+        <p class="title">俗世里的烟火气|总有些瞬间 让你热泪盈眶</p>
         <div class="author-wrap">
-          <img class='avatar' src="../assets/avatar.jpg" alt="">
-          <span class='name'>原创君</span>
+          <img class="avatar" src="../assets/avatar.jpg" alt="" />
+          <span class="name">原创君</span>
           <span class="time">2020-2-26 创建</span>
         </div>
         <div class="play-wrap">
-          
+          <span class="iconfont icon-circle-play"></span>
+          <span class="text">播放全部</span>
+        </div>
+        <div class="tag-wrap">
+          <span class="title">标签:</span>
+          <ul>
+            <li>华语</li>
+            <li>怀旧</li>
+            <li>感动</li>
+          </ul>
+        </div>
+        <div class="desc-wrap">
+          <span class="title">简介:</span>
+          <span class="desc"
+            >你是否曾在某个瞬间 被一次日落击中心中最柔软的部分 曾在回家途中
+            被袅袅升起的饭菜香味感动得热泪盈眶？ 生活或许有时不尽如人意
+            却总有一些叫“烟火气”的东西 使得我们在这个俗世中 依然保持希望
+            封面来自网络</span
+          >
         </div>
       </div>
     </div>
+    <el-tabs v-model="activeIndex">
+      <el-tab-pane label="歌曲列表" name="1">
+        <el-table class='song-table' :data="tableData">
+          <el-table-column type="index"></el-table-column>
+          <el-table-column width="100" label="">
+            <template slot-scope="scope">
+              <div class="img-wrap">
+                <img :src="scope.row.img" alt="" />
+                <span class="iconfont icon-play"></span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column width="280" label="音乐标题">
+            <template slot-scope="scope">
+              <div class="song-wrap">
+                <div class="name-wrap">
+                  <span>{{ scope.row.songName }}</span>
+                  <span
+                    v-if="scope.row.hasMV != 0"
+                    class="iconfont icon-mv"
+                  ></span>
+                </div>
+                <span>{{ scope.row.subTitle }}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column width="280" prop="singer" label="歌手"></el-table-column>
+          <el-table-column width="280" prop="albumName" label="专辑"></el-table-column>
+          <el-table-column prop="duration" label="时长"></el-table-column>
+        </el-table>
+      </el-tab-pane>
+      <el-tab-pane label="评论(66)" name="2">
+        <!-- 精彩评论 -->
+        <div class="comment-wrap">
+          <p class="title">精彩评论<span class="number">(666)</span></p>
+          <div class="comments-wrap">
+            <div class="item">
+              <div class="icon-wrap">
+                <img src="../assets/avatar.jpg" alt="" />
+              </div>
+              <div class="content-wrap">
+                <div class="content">
+                  <span class="name">爱斯基摩：</span>
+                  <span class="comment">谁说的，长大了依旧可爱哈</span>
+                </div>
+                <div class="re-content">
+                  <span class="name">小苹果：</span>
+                  <span class="comment">还是小时候比较可爱</span>
+                </div>
+                <div class="date">2020-02-12 17:26:11</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 最新评论 -->
+        <div class="comment-wrap">
+          <p class="title">最新评论<span class="number">(666)</span></p>
+          <div class="comments-wrap">
+            <div class="item">
+              <div class="icon-wrap">
+                <img src="../assets/avatar.jpg" alt="" />
+              </div>
+              <div class="content-wrap">
+                <div class="content">
+                  <span class="name">爱斯基摩：</span>
+                  <span class="comment">谁说的，长大了依旧可爱哈</span>
+                </div>
+                <div class="re-content">
+                  <span class="name">小苹果：</span>
+                  <span class="comment">还是小时候比较可爱</span>
+                </div>
+                <div class="date">2020-02-12 17:26:11</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon-wrap">
+                <img src="../assets/avatar.jpg" alt="" />
+              </div>
+              <div class="content-wrap">
+                <div class="content">
+                  <span class="name">爱斯基摩：</span>
+                  <span class="comment">谁说的，长大了依旧可爱哈</span>
+                </div>
+                <div class="re-content">
+                  <span class="name">小苹果：</span>
+                  <span class="comment">还是小时候比较可爱</span>
+                </div>
+                <div class="date">2020-02-12 17:26:11</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="icon-wrap">
+                <img src="../assets/avatar.jpg" alt="" />
+              </div>
+              <div class="content-wrap">
+                <div class="content">
+                  <span class="name">爱斯基摩：</span>
+                  <span class="comment">谁说的，长大了依旧可爱哈</span>
+                </div>
+                <div class="re-content">
+                  <span class="name">小苹果：</span>
+                  <span class="comment">还是小时候比较可爱</span>
+                </div>
+                <div class="date">2020-02-12 17:26:11</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
 export default {
-    name:"playlist"
-}
+  name: 'playlist',
+  data() {
+    return {
+      activeIndex: '1',
+      tableData: [
+        {
+          img:
+            'http://p3.music.126.net/sL4dfIANkKupkJvPipmd5g==/109951164736488659.jpg?param=120y120',
+          songName: '你要相信这不是最后一天',
+          subTitle: '电视剧《加油吧实习生》插曲',
+          singer: '华晨宇',
+          albumName: '你要相信这不是最后一天',
+          duration: '06:03',
+          hasMV: 0
+        },
+        {
+          img:
+            'http://p4.music.126.net/76Hpk_9ot2h2dozv5JbbYA==/109951164737016168.jpg?param=120y120',
+          songName: 'Tomorrow will be fine.',
+          singer: 'Sodagreen',
+          albumName: 'Tomorrow will be fine.',
+          duration: '04:59',
+          hasMV: 1
+        },
+        {
+          img:
+            'http://p4.music.126.net/QI_lE_SlqUXa51z56qcOSw==/109951164732550113.jpg?param=120y120',
+          songName: '误解',
+          singer: '戴佩妮',
+          albumName: '误解',
+          duration: '03:43',
+          hasMV: 1
+        }
+      ]
+    };
+  }
+};
 </script>
 
-<style>
+<style lang="scss">
+.playlist-container {
+  margin: auto;
+  padding-top: 40px;
+  .top-wrap {
+    display: flex;
+    span {
+      font-size: 17px;
+    }
+    .img-wrap {
+      margin-right: 30px;
+      img {
+        width: 230px;
+        height: 230px;
+      }
+    }
+    .info-wrap {
+      .title {
+        margin-bottom: 20px;
+      }
+      .author-wrap {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        img {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+        .name {
+          margin-right: 10px;
+        }
+        .time {
+          font-size: 14px;
+        }
+      }
+      .play-wrap {
+        width: 120px;
+        height: 35px;
+        border-radius: 4px;
+        background: linear-gradient(to right, #e85e4d, #c6483c);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 25px;
+        span {
+          color: white;
+          &.iconfont {
+            margin-right: 8px;
+          }
+          &.text {
+            font-size: 16px;
+          }
+        }
+      }
+      .tag-wrap {
+        display: flex;
+        margin-bottom: 15px;
+        span {
+          margin: 0;
+        }
+        ul {
+          display: flex;
+          align-items: center;
+        }
+        li {
+          font-size: 15px;
+          &:not(:last-child)::after {
+            content: '/';
+            margin: 0 4px;
+          }
+        }
+      }
+      .desc-wrap {
+        span {
+          &:last-child {
+            font-size: 15px;
+          }
+        }
+      }
+      span:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+  .el-tabs__active-bar {
+    background-color: #c3473a;
+  }
 
+  .el-tabs__item:hover,
+  .el-tabs__item.is-active {
+    color: #c3473a;
+  }
+  .comment-wrap {
+    margin-bottom: 70px;
+    .title {
+      font-size: 20px;
+      .number {
+        color: black;
+        font-size: 18px;
+      }
+    }
+    .item {
+      display: flex;
+      padding-top: 20px;
+      .icon-wrap {
+        margin-right: 15px;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
+      &:not(:last-child) {
+        .content-wrap {
+          border-bottom: 1px solid #f2f2f1;
+        }
+      }
+      .date {
+        color: #bebebe;
+        font-size: 14px;
+      }
+
+      .content-wrap {
+        padding-bottom: 20px;
+
+        flex: 1;
+        .name {
+          color: #517eaf;
+          font-size: 14px;
+        }
+        .comment {
+          font-size: 14px;
+        }
+        .content,
+        .re-content {
+          margin-bottom: 10px;
+        }
+        .re-content {
+          padding: 10px;
+          background-color: #e6e5e6;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+  .song-table {
+    border-bottom: none;
+    tbody{
+      border-bottom: none;
+    }
+    td{
+      border-bottom: none;
+    }
+    .song-wrap {
+      > span {
+        margin-top: 20px;
+        display: inline-block;
+        color: #bebebe;
+      }
+      .icon-mv {
+        padding-left: 5px;
+        color: #dd6d60;
+      }
+    }
+    .img-wrap {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      img {
+        width: 70px;
+        height: 70px;
+        border-radius: 5px;
+      }
+      .icon-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 25px;
+        height: 25px;
+        color: #dd6d60;
+        font-size: 12px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.8);
+        &::before {
+          transform: translateX(1px);
+        }
+      }
+    }
+  }
+}
 </style>

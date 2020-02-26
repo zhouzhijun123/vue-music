@@ -23,7 +23,7 @@
       </div>
       <!-- 精彩评论 -->
       <div class="comment-wrap">
-        <h3 class="title">精彩评论<span class="number">(666)</span></h3>
+        <p class="title">精彩评论<span class="number">(666)</span></p>
         <div class="comments-wrap">
           <div class="item">
             <div class="icon-wrap">
@@ -45,7 +45,7 @@
       </div>
       <!-- 最新评论 -->
       <div class="comment-wrap">
-        <h3 class="title">最新评论<span class="number">(666)</span></h3>
+        <p class="title">最新评论<span class="number">(666)</span></p>
         <div class="comments-wrap">
           <div class="item">
             <div class="icon-wrap">
@@ -196,14 +196,15 @@ export default {
             border-radius: 50%;
           }
         }
-        &:not(:last-child){
-           .content-wrap{
-             border-bottom: 1px solid #f2f2f1;
-           }
-        }      
+        &:not(:last-child) {
+          .content-wrap {
+            border-bottom: 1px solid #f2f2f1;
+          }
+        }
+      
 
         .content-wrap {
-        padding-bottom:20px;
+          padding-bottom: 20px;
 
           flex: 1;
           .name {

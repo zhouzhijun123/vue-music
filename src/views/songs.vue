@@ -8,7 +8,7 @@
       <span class="item">韩国</span>
     </div>
     <!-- 底部的table -->
-    <el-table :data="tableData">
+    <el-table class="song-table" :data="tableData">
       <el-table-column type="index"></el-table-column>
       <el-table-column width="100">
         <template slot-scope="scope">
@@ -91,42 +91,44 @@ export default {
       }
     }
   }
-  .song-wrap {
-    >span{
-      margin-top: 20px;
-      display: inline-block;
-      color:#BEBEBE;
+  .song-table {
+    .song-wrap {
+      > span {
+        margin-top: 20px;
+        display: inline-block;
+        color: #bebebe;
+      }
+      .icon-mv {
+        padding-left: 5px;
+        color: #dd6d60;
+      }
     }
-    .icon-mv {
-      padding-left: 5px;
-      color: #dd6d60;
-    }
-  }
-  .img-wrap {
-    position: relative;
-    width: 70px;
-    height: 70px;
-    img {
+    .img-wrap {
+      position: relative;
       width: 70px;
       height: 70px;
-      border-radius: 5px;
-    }
-    .icon-play {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 25px;
-      height: 25px;
-      color: #dd6d60;
-      font-size: 12px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, 0.8);
-      &::before {
-        transform: translateX(1px);
+      img {
+        width: 70px;
+        height: 70px;
+        border-radius: 5px;
+      }
+      .icon-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 25px;
+        height: 25px;
+        color: #dd6d60;
+        font-size: 12px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.8);
+        &::before {
+          transform: translateX(1px);
+        }
       }
     }
   }
