@@ -47,69 +47,28 @@
     <div class="mvs">
       <h3 class="title">推荐MV</h3>
       <div class="items">
-        <div class="item">
+        <div class="item" v-for="item in mv" :key="item.id">
           <div class="img-wrap">
-            <img src="../assets/mvCover.jpg" alt="" />
+            <img :src="item.picUrl" alt="" />
             <span class="iconfont icon-play"></span>
             <div class="num-wrap">
               <div class="iconfont icon-play"></div>
-              <div class="num">9912</div>
+              <div class="num">{{item.playCount}}</div>
             </div>
           </div>
           <div class="info-wrap">
-            <div class="name">HEYNA</div>
-            <div class="singer">余恩</div>
+            <div class="name">{{item.copywriter}}</div>
+            <div class="singer">{{item.artistName}}</div>
           </div>
         </div>
-        <div class="item">
-          <div class="img-wrap">
-            <img src="../assets/mvCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-            <div class="num-wrap">
-              <div class="iconfont icon-play"></div>
-              <div class="num">9912</div>
-            </div>
-          </div>
-          <div class="info-wrap">
-            <div class="name">HEYNA</div>
-            <div class="singer">余恩</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <img src="../assets/mvCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-            <div class="num-wrap">
-              <div class="iconfont icon-play"></div>
-              <div class="num">9912</div>
-            </div>
-          </div>
-          <div class="info-wrap">
-            <div class="name">HEYNA</div>
-            <div class="singer">余恩</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="img-wrap">
-            <img src="../assets/mvCover.jpg" alt="" />
-            <span class="iconfont icon-play"></span>
-            <div class="num-wrap">
-              <div class="iconfont icon-play"></div>
-              <div class="num">9912</div>
-            </div>
-          </div>
-          <div class="info-wrap">
-            <div class="name">HEYNA</div>
-            <div class="singer">余恩</div>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { banner, songlist, newsong } from '@/api/discovery';
+import { banner, songlist, newsong,mv } from '@/api/discovery';
 export default {
   name: 'discovery',
   data() {
@@ -119,7 +78,9 @@ export default {
       // 歌单
       playList: [],
       // 新歌
-      newsong: []
+      newsong: [],
+      // mv
+      mv:[]
     };
   },
   created() {
@@ -131,9 +92,11 @@ export default {
       this.playList = res.result;
     });
     newsong().then(res => {
-      // window.console.log(res)
       this.newsong = res.result;
     });
+    mv().then(res=>{
+      this.mv = res.result
+    })
   }
 };
 </script>
@@ -353,6 +316,7 @@ export default {
         .info-wrap {
           .name {
             font-size: 15px;
+            margin-bottom: 5px;
           }
           .singer {
             font-size: 14px;

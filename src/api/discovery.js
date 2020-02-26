@@ -23,3 +23,10 @@ export function newsong() {
    
   });
 }
+export function mv() {
+  return request({
+    url: '/personalized/mv',
+    method: 'get',
+   
+  });
+}
