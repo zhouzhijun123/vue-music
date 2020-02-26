@@ -36,23 +36,23 @@
     </div>
     <el-tabs v-model="activeIndex">
       <el-tab-pane label="歌曲列表" name="1">
-        <el-table class='song-table' :data="tableData">
+        <el-table class="song-table" :data="tableData">
           <el-table-column type="index"></el-table-column>
           <el-table-column width="100" label="">
             <template slot-scope="scope">
-              <div class="img-wrap">
-                <img :src="scope.row.img" alt="" />
+              <div class="img-wrap" @click="playMusic(scope.row.id)">
+                <img :src="scope.row.al.picUrl" alt="" />
                 <span class="iconfont icon-play"></span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column width="280" label="音乐标题">
+          <el-table-column label="音乐标题">
             <template slot-scope="scope">
               <div class="song-wrap">
                 <div class="name-wrap">
-                  <span>{{ scope.row.songName }}</span>
+                  <span>{{ scope.row.name }}</span>
                   <span
-                    v-if="scope.row.hasMV != 0"
+                    v-if="scope.row.mv != 0"
                     class="iconfont icon-mv"
                   ></span>
                 </div>
@@ -60,9 +60,21 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column width="280" prop="singer" label="歌手"></el-table-column>
-          <el-table-column width="280" prop="albumName" label="专辑"></el-table-column>
-          <el-table-column prop="duration" label="时长"></el-table-column>
+          <el-table-column width="280" label="歌手">
+            <template slot-scope="scope">
+              {{ scope.row.ar[0].name }}
+            </template>
+          </el-table-column>
+          <el-table-column width="280" prop="albumName" label="专辑">
+            <template slot-scope="scope">
+              {{ scope.row.al.name }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="duration" label="时长">
+            <template slot-scope="scope">
+              {{ scope.row.dt | formatDuration }}
+            </template>
+          </el-table-column>
         </el-table>
       </el-tab-pane>
       <el-tab-pane label="评论(66)" name="2">
@@ -148,42 +160,47 @@
 </template>
 
 <script>
+import { playlistDetail } from '@/api/playlist';
+import {songUrl} from '@/api/discovery';
 export default {
   name: 'playlist',
   data() {
     return {
       activeIndex: '1',
-      tableData: [
-        {
-          img:
-            'http://p3.music.126.net/sL4dfIANkKupkJvPipmd5g==/109951164736488659.jpg?param=120y120',
-          songName: '你要相信这不是最后一天',
-          subTitle: '电视剧《加油吧实习生》插曲',
-          singer: '华晨宇',
-          albumName: '你要相信这不是最后一天',
-          duration: '06:03',
-          hasMV: 0
-        },
-        {
-          img:
-            'http://p4.music.126.net/76Hpk_9ot2h2dozv5JbbYA==/109951164737016168.jpg?param=120y120',
-          songName: 'Tomorrow will be fine.',
-          singer: 'Sodagreen',
-          albumName: 'Tomorrow will be fine.',
-          duration: '04:59',
-          hasMV: 1
-        },
-        {
-          img:
-            'http://p4.music.126.net/QI_lE_SlqUXa51z56qcOSw==/109951164732550113.jpg?param=120y120',
-          songName: '误解',
-          singer: '戴佩妮',
-          albumName: '误解',
-          duration: '03:43',
-          hasMV: 1
-        }
-      ]
+      tableData: []
     };
+  },
+  filters: {
+    formatDuration(dt) {
+      // 转分
+      let min = Math.ceil(dt / 1000 / 60);
+      min = min < 10 ? '0' + min : min;
+      // 秒
+      let sec = Math.ceil((dt / 1000) % 60);
+      sec = sec < 10 ? '0' + sec : sec;
+      return min + ':' + sec;
+    }
+  },
+  created() {
+    const { id } = this.$route.query;
+    playlistDetail({
+      id
+    }).then(res => {
+      // window.console.log(res)
+      // 歌曲信息
+      this.tableData = res.playlist.tracks;
+    });
+  },
+  methods: {
+    playMusic(id) {
+      songUrl({
+        id: id
+      }).then(res => {
+        // window.console.log(res)
+        // this.songUrl = res.data[0].url
+        this.$parent.url = res.data[0].url;
+      });
+    }
   }
 };
 </script>
@@ -328,6 +345,5 @@ export default {
       }
     }
   }
-
 }
 </style>
