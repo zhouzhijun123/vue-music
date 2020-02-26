@@ -298,8 +298,14 @@
 </template>
 
 <script>
+import { banner } from '@/api/discovery';
 export default {
-  name: 'discovery'
+  name: 'discovery',
+  created(){
+    banner().then(res=>{
+      window.console.log(res)
+    })
+  }
 };
 </script>
 

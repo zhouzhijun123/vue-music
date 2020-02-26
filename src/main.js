@@ -15,7 +15,6 @@ import '@/style/base.scss'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-
 // 导入对应的路由
 import discovery from '@/views/discovery.vue'
 import playlists from '@/views/playlists.vue'
@@ -27,6 +26,11 @@ import result from '@/views/result.vue'
 
 const router = new VueRouter({
   routes:[
+    {
+      // 发现音乐
+      path:"/",
+      redirect:'/discovery'
+    },
     {
       // 发现音乐
       path:"/discovery",
