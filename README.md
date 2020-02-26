@@ -1,24 +1,21 @@
 # webmusic
+> 网页版本的播放器
 
-## Project setup
-```
-npm install
-```
+## 感谢
+https://github.com/sl1673495/vue-netease-music
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 后端接口
 
-### Compiles and minifies for production
-```
-npm run build
-```
+https://binaryify.github.io/NeteaseCloudMusicApi
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 技术栈
+[vue-cli3](https://cli.vuejs.org/zh/) 创建的项目
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[sass](https://cli.vuejs.org/zh/guide/css.html#%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8)(vue-cli中使用sass)
+
+[Element-ui](https://element.eleme.cn/#/zh-CN/component/quickstart)(轮播，分页，tab切换)
+
+
+## 分支说明
+
+1. layout : 只完成了布局

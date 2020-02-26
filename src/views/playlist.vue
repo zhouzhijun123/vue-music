@@ -274,14 +274,7 @@ export default {
       }
     }
   }
-  .el-tabs__active-bar {
-    background-color: #c3473a;
-  }
 
-  .el-tabs__item:hover,
-  .el-tabs__item.is-active {
-    color: #c3473a;
-  }
   .comment-wrap {
     margin-bottom: 70px;
     .title {
@@ -335,53 +328,6 @@ export default {
       }
     }
   }
-  .song-table {
-    border-bottom: none;
-    tbody{
-      border-bottom: none;
-    }
-    td{
-      border-bottom: none;
-    }
-    .song-wrap {
-      > span {
-        margin-top: 20px;
-        display: inline-block;
-        color: #bebebe;
-      }
-      .icon-mv {
-        padding-left: 5px;
-        color: #dd6d60;
-      }
-    }
-    .img-wrap {
-      position: relative;
-      width: 70px;
-      height: 70px;
-      img {
-        width: 70px;
-        height: 70px;
-        border-radius: 5px;
-      }
-      .icon-play {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 25px;
-        height: 25px;
-        color: #dd6d60;
-        font-size: 12px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(255, 255, 255, 0.8);
-        &::before {
-          transform: translateX(1px);
-        }
-      }
-    }
-  }
+
 }
 </style>
