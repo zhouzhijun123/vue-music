@@ -263,14 +263,15 @@ export default {
           height: 200px;
           border-radius: 5px;
         }
-        .desc-wrap {
+          .desc-wrap {
           position: absolute;
+          width: 100%;
           top: 0;
           left: 0;
           font-size: 16px;
           color: white;
           background: rgba(0, 0, 0, 0.5);
-          height: 50px;
+          max-height: 50px;
           padding: 5px;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -278,6 +279,9 @@ export default {
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           top: -50px;
+          span{
+            font-size:14px;
+          }
         }
         &:hover .desc-wrap {
           top: 0;
