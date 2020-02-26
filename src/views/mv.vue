@@ -63,6 +63,38 @@
               <div class="date">2020-02-12 17:26:11</div>
             </div>
           </div>
+          <div class="item">
+            <div class="icon-wrap">
+              <img src="../assets/avatar.jpg" alt="" />
+            </div>
+            <div class="content-wrap">
+              <div class="content">
+                <span class="name">爱斯基摩：</span>
+                <span class="comment">谁说的，长大了依旧可爱哈</span>
+              </div>
+              <div class="re-content">
+                <span class="name">小苹果：</span>
+                <span class="comment">还是小时候比较可爱</span>
+              </div>
+              <div class="date">2020-02-12 17:26:11</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="icon-wrap">
+              <img src="../assets/avatar.jpg" alt="" />
+            </div>
+            <div class="content-wrap">
+              <div class="content">
+                <span class="name">爱斯基摩：</span>
+                <span class="comment">谁说的，长大了依旧可爱哈</span>
+              </div>
+              <div class="re-content">
+                <span class="name">小苹果：</span>
+                <span class="comment">还是小时候比较可爱</span>
+              </div>
+              <div class="date">2020-02-12 17:26:11</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -78,41 +110,13 @@
                 <div class="iconfont icon-play"></div>
                 <div class="num">9912</div>
               </div>
+              <span class="time">02:43</span>
             </div>
             <div class="info-wrap">
               <div class="name">HEYNA</div>
               <div class="singer">余恩</div>
             </div>
           </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
@@ -183,6 +187,7 @@ export default {
       }
       .item {
         display: flex;
+        padding-top: 20px;
         .icon-wrap {
           margin-right: 15px;
           img {
@@ -191,7 +196,15 @@ export default {
             border-radius: 50%;
           }
         }
+        &:not(:last-child){
+           .content-wrap{
+             border-bottom: 1px solid #f2f2f1;
+           }
+        }      
+
         .content-wrap {
+        padding-bottom:20px;
+
           flex: 1;
           .name {
             color: #517eaf;
@@ -226,6 +239,7 @@ export default {
           align-items: center;
           padding: 10px;
           cursor: pointer;
+
           &:hover {
             background-color: #f5f5f5;
           }
@@ -233,11 +247,11 @@ export default {
             width: 180px;
             position: relative;
             margin-right: 10px;
-            >.icon-play {
+            > .icon-play {
               position: absolute;
               top: 50%;
               left: 50%;
-              transform: translate(-50%,-50%);
+              transform: translate(-50%, -50%);
               width: 40px;
               height: 40px;
               color: #dd6d60;
@@ -252,7 +266,7 @@ export default {
                 transform: translateX(3px);
               }
             }
-            &:hover>.icon-play {
+            &:hover > .icon-play {
               opacity: 1;
             }
             img {
@@ -275,6 +289,13 @@ export default {
                 align-items: center;
                 margin-right: 5px;
               }
+            }
+            .time {
+              position: absolute;
+              bottom: 5px;
+              right: 5px;
+              color: white;
+              font-size: 15px;
             }
           }
           .info-wrap {

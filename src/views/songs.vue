@@ -18,11 +18,14 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column width="280" >
+      <el-table-column width="280">
         <template slot-scope="scope">
           <div class="song-wrap">
-            {{ scope.row.songName }}
-            <span v-if="scope.row.hasMV != 0" class="iconfont icon-mv"></span>
+            <div class="name-wrap">
+              <span>{{ scope.row.songName }}</span>
+              <span v-if="scope.row.hasMV != 0" class="iconfont icon-mv"></span>
+            </div>
+            <span>{{ scope.row.subTitle }}</span>
           </div>
         </template>
       </el-table-column>
@@ -43,6 +46,7 @@ export default {
           img:
             'http://p3.music.126.net/sL4dfIANkKupkJvPipmd5g==/109951164736488659.jpg?param=120y120',
           songName: '你要相信这不是最后一天',
+          subTitle: '电视剧《加油吧实习生》插曲',
           singer: '华晨宇',
           albumName: '你要相信这不是最后一天',
           duration: '06:03',
@@ -88,8 +92,11 @@ export default {
     }
   }
   .song-wrap {
-    display: flex;
-    align-items: center;
+    >span{
+      margin-top: 20px;
+      display: inline-block;
+      color:#BEBEBE;
+    }
     .icon-mv {
       padding-left: 5px;
       color: #dd6d60;
