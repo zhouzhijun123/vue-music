@@ -1,6 +1,6 @@
 <template>
   <div class="index-container">
-    <div class="nav">
+    <div class="nav" v-if="$route.path!='/mv'">
       <ul>
         <li>
           <router-link to="/discovery">

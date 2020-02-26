@@ -1,5 +1,5 @@
 <template>
-  <div class="mv-container">
+  <div class="mvs-container">
     <div class="filter-wrap">
       <div class="seciton-wrap">
         <span class="section-type">地区:</span>
@@ -63,7 +63,7 @@
     <!-- 推荐MV -->
     <div class="mvs">
       <div class="items">
-        <div class="item">
+        <div class="item" @click="toMv(10)">
           <div class="img-wrap">
             <img src="../assets/mvCover.jpg" alt="" />
             <div class="num-wrap">
@@ -147,12 +147,17 @@
 
 <script>
 export default {
-  name: 'mvs'
+  name: 'mvs',
+  methods:{
+    toMv(id){
+      this.$router.push(`/mv?id=${id}`)
+    }
+  }
 };
 </script>
 
 <style lang="scss">
-.mv-container {
+.mvs-container {
   padding-top: 20px;
   .filter-wrap {
     > div {
