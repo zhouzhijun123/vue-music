@@ -6,7 +6,7 @@
       <div class="video-wrap">
         <video
           controls
-          src="https://nie.v.netease.com/r/video/20180531/44f868de-deef-4409-8325-3bb3b5567f2c.mp4"
+          :src="mvUrl"
         ></video>
       </div>
       <!-- mv信息 -->
@@ -124,8 +124,21 @@
 </template>
 
 <script>
+import {mvUrl} from '@/api/mv'
 export default {
-  name: 'mv'
+  name: 'mv',
+  data(){
+    return {
+      // mv地址
+      mvUrl:""
+    }
+  },
+  created(){
+    const {id} = this.$route.query
+    mvUrl({id}).then((res)=>{
+      this.mvUrl = res.data.url
+    })
+  }
 };
 </script>
 

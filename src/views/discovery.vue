@@ -48,7 +48,7 @@
       <h3 class="title">推荐MV</h3>
       <div class="items">
         <div class="item" v-for="item in mv" :key="item.id">
-          <div class="img-wrap">
+          <div class="img-wrap" @click="toMv(item.id)">
             <img :src="item.picUrl" alt="" />
             <span class="iconfont icon-play"></span>
             <div class="num-wrap">
@@ -100,7 +100,9 @@ export default {
     })
   },
   methods:{
-    
+    toMv(id){
+      this.$router.push(`/mv?id=${id}`)
+    },
     toPlayList(id){
       this.$router.push(`/playlist?id=${id}`)
     },
