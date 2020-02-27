@@ -106,7 +106,7 @@
       <!-- tab的内容区域 -->
       <div class="tab-content">
         <div class="items">
-          <div class="item" v-for="item in playList" :key="item.id">
+          <div class="item" v-for="item in playList" :key="item.id" @click="toPlayList(item.id)">
             <div class="img-wrap">
               <div class="num-wrap">
                 播放量:
@@ -164,6 +164,10 @@ export default {
     this.getData();
   },
   methods: {
+    // 去歌单详情页面
+    toPlayList(id) {
+      this.$router.push(`/playlist?id=${id}`);
+    },
     // 获取歌单信息
     getData() {
       highquality({ cat: this.cat }).then(res => {
@@ -187,7 +191,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.page = val;
-      this.getData()
+      this.getData();
     }
   }
 };

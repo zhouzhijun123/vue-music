@@ -104,6 +104,7 @@ export default {
   audio {
     width: 100%;
     border-radius: none;
+    outline: none;
   }
 }
 </style>
