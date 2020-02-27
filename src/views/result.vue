@@ -49,116 +49,18 @@
       </el-tab-pane>
       <el-tab-pane label="歌单" name="1000">
         <div class="items">
-          <div class="item">
+          <div class="item" v-for="item in tableData" :key="item.id" @click="toPlaylist(item.id)">
             <div class="img-wrap">
               <div class="num-wrap">
                 播放量:
-                <span class="num">66892</span>
+                <span class="num">{{ item.playCount | formatCount}}</span>
               </div>
-              <img src="../assets/cover.jpg" alt="" />
+              <img :src="item.coverImgUrl" alt="" />
               <span class="iconfont icon-play"></span>
             </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
+            <p class="name">{{item.name}}</p>
           </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
+     
         </div>
       </el-tab-pane>
       <el-tab-pane label="MV" name="1004">
@@ -302,10 +204,16 @@ export default {
       keywords: this.$route.query.keywords
     };
   },
+  watch: {
+    type: 'searchResult'
+  },
   created() {
     this.searchResult();
   },
   methods: {
+    toPlaylist(id){
+      this.$router.push(`/playlist?id=${id}`)
+    },
     // 双击某一行
     rowDbclick(row) {
       songUrl({
@@ -335,8 +243,19 @@ export default {
       }).then(res => {
         // window.console.log(res)
         // 根据类型不同
-        this.tableData = res.result.songs;
-        this.total = res.result.songCount;
+        switch (this.type) {
+          case '1':
+            this.tableData = res.result.songs;
+            this.total = res.result.songCount;
+            break;
+          case '1000':
+            this.tableData = res.result.playlists;
+            this.total = res.result.playlistCount;
+            break;
+
+          default:
+            break;
+        }
       });
     }
   }
@@ -369,7 +288,7 @@ export default {
     flex-wrap: wrap;
     justify-content: flex-start;
     .item {
-      width: 250px;
+      width: 200px;
       cursor: pointer;
       margin-right: 20px;
       margin-bottom: 20px;
@@ -408,7 +327,7 @@ export default {
           top: 0;
           right: 0;
           display: flex;
-          align-content: center;
+          align-items: center;
           font-size: 15px;
           padding-right: 5px;
           padding-top: 2px;
@@ -427,14 +346,13 @@ export default {
           font-size: 15px;
         }
       }
-      .info-wrap {
-        .name {
-          font-size: 15px;
-        }
-        .singer {
-          font-size: 14px;
-          color: #c5c5c5;
-        }
+      .name {
+        font-size: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
       }
     }
   }
