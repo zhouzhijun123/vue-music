@@ -91,7 +91,7 @@
       <h3 class="title">相关推荐</h3>
       <div class="mvs">
         <div class="items" v-for="item in simiMV" :key="item.id">
-          <div class="item">
+          <div class="item" @click="toMV(item.id)">
             <div class="img-wrap">
               <img :src="item.cover" alt="" />
               <span class="iconfont icon-play"></span>
@@ -164,33 +164,47 @@ export default {
         this.comments = res.comments;
         this.total = res.total;
       });
+    },
+    // 获取信息
+    getInfo() {
+      const { id } = this.$route.query;
+      mvUrl({ id }).then(res => {
+        this.mvUrl = res.data.url;
+      });
+      simiMV({ mvid: id }).then(res => {
+        // window.console.log(res)
+        this.simiMV = res.mvs;
+      });
+      // 获取评论
+      this.getComments();
+      // 获取MV详情
+      mvDetail({ mvid: id }).then(res => {
+        this.mvName = res.data.name;
+        this.playCount = res.data.playCount;
+        this.publishTime = res.data.publishTime;
+        this.desc = res.data.desc;
+        artistInfo({
+          artistId: res.data.artistId
+        }).then(res => {
+          // 歌手名
+          this.artistName = res.artist.name;
+          this.artistCover = res.artist.picUrl;
+        });
+      });
+    },
+    // 切换mv
+    toMV(id){
+      this.$router.push(`/mv?id=${id}`)
+    }
+  },
+  // 侦听器
+  watch:{
+    '$route.query.id'(){
+      this.getInfo()
     }
   },
   created() {
-    const { id } = this.$route.query;
-    mvUrl({ id }).then(res => {
-      this.mvUrl = res.data.url;
-    });
-    simiMV({ mvid: id }).then(res => {
-      // window.console.log(res)
-      this.simiMV = res.mvs;
-    });
-    // 获取评论
-    this.getComments();
-    // 获取MV详情
-    mvDetail({ mvid: id }).then(res => {
-      this.mvName = res.data.name;
-      this.playCount = res.data.playCount;
-      this.publishTime = res.data.publishTime;
-      this.desc = res.data.desc;
-      artistInfo({
-        artistId: res.data.artistId
-      }).then(res => {
-        // 歌手名
-        this.artistName = res.artist.name;
-        this.artistCover = res.artist.picUrl;
-      });
-    });
+    this.getInfo()
   }
 };
 </script>
