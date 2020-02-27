@@ -42,3 +42,13 @@ export function mvDetail({mvid}) {
     }
   });
 }
+// 歌手信息
+export function artistInfo({artistId}) {
+  return request({
+    url: '/artists',
+    method: 'get',
+    params:{
+      id:artistId
+    }
+  });
+}

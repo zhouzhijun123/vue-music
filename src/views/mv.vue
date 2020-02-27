@@ -9,8 +9,8 @@
       <!-- mv信息 -->
       <div class="info-wrap">
         <div class="singer-info">
-          <img src="../assets/avatar.jpg" alt="" />
-          <span class="name">TF Boys</span>
+          <img :src="artistCover" alt="" />
+          <span class="name">{{ artistName }}</span>
         </div>
         <div class="mv-info">
           <h2 class="title">{{ mvName }}</h2>
@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { mvUrl, simiMV, mvComments, mvDetail } from '@/api/mv';
+import { mvUrl, simiMV, mvComments, mvDetail, artistInfo } from '@/api/mv';
 export default {
   name: 'mv',
   data() {
@@ -139,7 +139,11 @@ export default {
       // 发布时间
       publishTime: '',
       // 描述
-      desc: ''
+      desc: '',
+      // 歌手名
+      artistName: '',
+      // 封面
+      artistCover: ''
     };
   },
 
@@ -175,11 +179,17 @@ export default {
     this.getComments();
     // 获取MV详情
     mvDetail({ mvid: id }).then(res => {
-      window.console.log(res);
       this.mvName = res.data.name;
       this.playCount = res.data.playCount;
       this.publishTime = res.data.publishTime;
       this.desc = res.data.desc;
+      artistInfo({
+        artistId: res.data.artistId
+      }).then(res => {
+        // 歌手名
+        this.artistName = res.artist.name;
+        this.artistCover = res.artist.picUrl;
+      });
     });
   }
 };
