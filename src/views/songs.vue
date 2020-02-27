@@ -1,11 +1,21 @@
 <template>
   <div class="songs-container">
     <div class="tab-bar">
-      <span class="item active">全部</span>
-      <span class="item">华语</span>
-      <span class="item">欧美</span>
-      <span class="item">日本</span>
-      <span class="item">韩国</span>
+      <span class="item" :class="{ active: type == 0 }" @click="type = 0"
+        >全部</span
+      >
+      <span class="item" :class="{ active: type == 7 }" @click="type = 7"
+        >华语</span
+      >
+      <span class="item" :class="{ active: type == 96 }" @click="type = 96"
+        >欧美</span
+      >
+      <span class="item" :class="{ active: type == 8 }" @click="type = 8"
+        >日本</span
+      >
+      <span class="item" :class="{ active: type == 16 }" @click="type = 16"
+        >韩国</span
+      >
     </div>
     <!-- 底部的table -->
     <el-table class="song-table" :data="tableData">
@@ -13,7 +23,7 @@
       <el-table-column width="100">
         <template slot-scope="scope">
           <div class="img-wrap">
-            <img :src="scope.row.img" alt="" />
+            <img :src="scope.row.album.picUrl" alt="" />
             <span class="iconfont icon-play"></span>
           </div>
         </template>
@@ -22,56 +32,59 @@
         <template slot-scope="scope">
           <div class="song-wrap">
             <div class="name-wrap">
-              <span>{{ scope.row.songName }}</span>
-              <span v-if="scope.row.hasMV != 0" class="iconfont icon-mv"></span>
+              <span>{{ scope.row.name }}</span>
+              <span v-if="scope.row.mvid != 0" class="iconfont icon-mv"></span>
             </div>
             <span>{{ scope.row.subTitle }}</span>
           </div>
         </template>
       </el-table-column>
-      <el-table-column width="280" prop="singer"></el-table-column>
-      <el-table-column width="280" prop="albumName"></el-table-column>
-      <el-table-column prop="duration"></el-table-column>
+      <el-table-column width="280">
+        <template slot-scope="scope">
+          {{ scope.row.artists[0].name }}
+        </template>
+      </el-table-column>
+      <el-table-column width="280">
+        <template slot-scope="scope">
+          {{ scope.row.album.name }}
+        </template>
+      </el-table-column>
+      <el-table-column>
+        <template slot-scope="scope">
+          {{ scope.row.duration | formatDuration }}
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
+import { topSongs } from '@/api/songs';
 export default {
   name: 'songs',
   data() {
     return {
-      tableData: [
-        {
-          img:
-            'http://p3.music.126.net/sL4dfIANkKupkJvPipmd5g==/109951164736488659.jpg?param=120y120',
-          songName: '你要相信这不是最后一天',
-          subTitle: '电视剧《加油吧实习生》插曲',
-          singer: '华晨宇',
-          albumName: '你要相信这不是最后一天',
-          duration: '06:03',
-          hasMV: 0
-        },
-        {
-          img:
-            'http://p4.music.126.net/76Hpk_9ot2h2dozv5JbbYA==/109951164737016168.jpg?param=120y120',
-          songName: 'Tomorrow will be fine.',
-          singer: 'Sodagreen',
-          albumName: 'Tomorrow will be fine.',
-          duration: '04:59',
-          hasMV: 1
-        },
-        {
-          img:
-            'http://p4.music.126.net/QI_lE_SlqUXa51z56qcOSw==/109951164732550113.jpg?param=120y120',
-          songName: '误解',
-          singer: '戴佩妮',
-          albumName: '误解',
-          duration: '03:43',
-          hasMV: 1
-        }
-      ]
+      type: 0,
+      tableData: []
     };
+  },
+  methods: {
+    getData() {
+      topSongs({
+        type: this.type
+      }).then(res => {
+        // window.console.log(res);
+        this.tableData = res.data;
+      });
+    }
+  },
+  watch: {
+    type() {
+      this.getData();
+    }
+  },
+  created() {
+    this.getData();
   }
 };
 </script>
