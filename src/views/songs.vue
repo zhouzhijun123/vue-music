@@ -24,7 +24,10 @@
         <template slot-scope="scope">
           <div class="img-wrap">
             <img :src="scope.row.album.picUrl" alt="" />
-            <span class="iconfont icon-play"></span>
+            <span
+              class="iconfont icon-play"
+              @click="playMusic(scope.row.id)"
+            ></span>
           </div>
         </template>
       </el-table-column>
@@ -60,6 +63,7 @@
 
 <script>
 import { topSongs } from '@/api/songs';
+import { songUrl } from '@/api/discovery';
 export default {
   name: 'songs',
   data() {
@@ -75,6 +79,15 @@ export default {
       }).then(res => {
         // window.console.log(res);
         this.tableData = res.data;
+      });
+    },
+    playMusic(id) {
+      songUrl({
+        id: id
+      }).then(res => {
+        // window.console.log(res)
+        // this.songUrl = res.data[0].url
+        this.$parent.url = res.data[0].url;
       });
     }
   },
