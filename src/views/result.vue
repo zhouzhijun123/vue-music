@@ -9,7 +9,7 @@
         <el-table
           stripe
           class="song-table"
-          :data="tableData"
+          :data="songList"
           @row-dblclick="rowDbclick"
         >
           <el-table-column type="index"></el-table-column>
@@ -49,125 +49,44 @@
       </el-tab-pane>
       <el-tab-pane label="歌单" name="1000">
         <div class="items">
-          <div class="item" v-for="item in tableData" :key="item.id" @click="toPlaylist(item.id)">
+          <div
+            class="item"
+            v-for="item in playList"
+            :key="item.id"
+            @click="toPlaylist(item.id)"
+          >
             <div class="img-wrap">
               <div class="num-wrap">
                 播放量:
-                <span class="num">{{ item.playCount | formatCount}}</span>
+                <span class="num">{{ item.playCount | formatCount }}</span>
               </div>
               <img :src="item.coverImgUrl" alt="" />
               <span class="iconfont icon-play"></span>
             </div>
-            <p class="name">{{item.name}}</p>
+            <p class="name">{{ item.name }}</p>
           </div>
-     
         </div>
       </el-tab-pane>
       <el-tab-pane label="MV" name="1004">
         <div class="items">
-          <div class="item">
+          <div
+            class="item"
+            v-for="item in mvList"
+            :key="item.id"
+            @click="toMV(item.id)"
+          >
             <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
+              <img :src="item.cover" alt="" />
               <span class="iconfont icon-play"></span>
               <div class="num-wrap">
                 <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
+                <div class="num">{{ item.playCount | formatCount }}</div>
               </div>
-              <span class="time">02:43</span>
+              <span class="time">{{ item.duration | formatDuration }}</span>
             </div>
             <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-              <span class="time">02:43</span>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-              <span class="time">02:43</span>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-              <span class="time">02:43</span>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-              <span class="time">02:43</span>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-              <span class="time">02:43</span>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-              <div class="num-wrap">
-                <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
-              </div>
-              <span class="time">02:43</span>
-            </div>
-            <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
+              <div class="name">{{ item.name }}</div>
+              <div class="singer">{{ item.artistName }}</div>
             </div>
           </div>
         </div>
@@ -200,7 +119,9 @@ export default {
       page: 1,
       // 总条数
       total: 0,
-      tableData: [],
+      songList: [],
+      playList: [],
+      mvList: [],
       keywords: this.$route.query.keywords
     };
   },
@@ -211,8 +132,8 @@ export default {
     this.searchResult();
   },
   methods: {
-    toPlaylist(id){
-      this.$router.push(`/playlist?id=${id}`)
+    toPlaylist(id) {
+      this.$router.push(`/playlist?id=${id}`);
     },
     // 双击某一行
     rowDbclick(row) {
@@ -245,15 +166,17 @@ export default {
         // 根据类型不同
         switch (this.type) {
           case '1':
-            this.tableData = res.result.songs;
+            this.songList = res.result.songs;
             this.total = res.result.songCount;
             break;
           case '1000':
-            this.tableData = res.result.playlists;
+            this.playList = res.result.playlists;
             this.total = res.result.playlistCount;
             break;
 
           default:
+            this.mvList = res.result.mvs;
+            this.total = res.result.mvCount;
             break;
         }
       });
@@ -353,6 +276,12 @@ export default {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+      }
+      .info-wrap {
+        .singer {
+          font-size: 15px;
+          color: #bebebe;
+        }
       }
     }
   }
