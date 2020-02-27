@@ -32,3 +32,13 @@ export function mvComments({id,offset}) {
     }
   });
 }
+// mv详情
+export function mvDetail({mvid}) {
+  return request({
+    url: '/mv/detail',
+    method: 'get',
+    params:{
+      mvid
+    }
+  });
+}

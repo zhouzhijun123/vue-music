@@ -13,9 +13,10 @@
           <span class="name">TF Boys</span>
         </div>
         <div class="mv-info">
-          <h2 class="title">TF BOYS LIVE 秀 王源《淘汰》</h2>
-          <span class="date">发布：2014-11-04</span>
-          <span class="number">播放：94526次</span>
+          <h2 class="title">{{ mvName }}</h2>
+          <span class="date">发布：{{ publishTime }}</span>
+          <span class="number">播放：{{ playCount | formatCount }}次</span>
+          <p class="desc">{{ desc }}</p>
         </div>
       </div>
       <!-- 精彩评论 -->
@@ -112,7 +113,7 @@
 </template>
 
 <script>
-import { mvUrl, simiMV, mvComments } from '@/api/mv';
+import { mvUrl, simiMV, mvComments, mvDetail } from '@/api/mv';
 export default {
   name: 'mv',
   data() {
@@ -130,18 +131,18 @@ export default {
       // 页码
       page: 1,
       // 总条数
-      total: 0
+      total: 0,
+      // mv的名字
+      mvName: '',
+      // 播放次数
+      playCount: '',
+      // 发布时间
+      publishTime: '',
+      // 描述
+      desc: ''
     };
   },
-  filters: {
-    formatCount(count) {
-      if (count / 10000 > 10) {
-        return parseInt(count / 10000) + '万';
-      } else {
-        return count;
-      }
-    }
-  },
+
   methods: {
     // 页码改变
     handleCurrentChange(val) {
@@ -172,6 +173,14 @@ export default {
     });
     // 获取评论
     this.getComments();
+    // 获取MV详情
+    mvDetail({ mvid: id }).then(res => {
+      window.console.log(res);
+      this.mvName = res.data.name;
+      this.playCount = res.data.playCount;
+      this.publishTime = res.data.publishTime;
+      this.desc = res.data.desc;
+    });
   }
 };
 </script>
@@ -221,6 +230,10 @@ export default {
         .title {
           font-size: 30px;
         }
+      }
+      .desc {
+        font-size: 15px;
+        margin-top: 20px;
       }
     }
     .comment-wrap {
