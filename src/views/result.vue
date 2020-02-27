@@ -1,41 +1,53 @@
 <template>
   <div class="result-container">
     <div class="title-wrap">
-      <h2 class="title">李荣浩</h2>
-      <span class="sub-title">找到985个结果</span>
+      <h2 class="title">{{ keywords }}</h2>
+      <span class="sub-title">找到{{ total }}个结果</span>
     </div>
-    <el-tabs v-model="activeIndex">
-      <el-tab-pane label="歌曲" name="songs">
-        <el-table stripe class="song-table" :data="tableData">
+    <el-tabs v-model="type">
+      <el-tab-pane label="歌曲" name="1">
+        <el-table
+          stripe
+          class="song-table"
+          :data="tableData"
+          @row-dblclick="rowDbclick"
+        >
           <el-table-column type="index"></el-table-column>
           <el-table-column width="280" label="音乐标题">
             <template slot-scope="scope">
               <div class="song-wrap">
                 <div class="name-wrap">
-                  <span>{{ scope.row.songName }}</span>
+                  <span>{{ scope.row.name }}</span>
                   <span
-                    v-if="scope.row.hasMV != 0"
+                    v-if="scope.row.mvid != 0"
                     class="iconfont icon-mv"
+                    @click="toMV(scope.row.mvid)"
                   ></span>
                 </div>
-                <span>{{ scope.row.subTitle }}</span>
+                <span v-if="scope.row.alias.length != 0">{{
+                  scope.row.alias[0]
+                }}</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            width="280"
-            prop="singer"
-            label="歌手"
-          ></el-table-column>
-          <el-table-column
-            width="280"
-            prop="albumName"
-            label="专辑"
-          ></el-table-column>
-          <el-table-column prop="duration" label="时长"></el-table-column>
+          <el-table-column width="280" label="歌手">
+            <template slot-scope="scope">
+              {{ scope.row.artists[0].name }}
+            </template>
+          </el-table-column>
+          <el-table-column width="280" label="专辑">
+            <template slot-scope="scope">
+              {{ scope.row.album.name }}
+            </template>
+          </el-table-column>
+          <el-table-column label="时长">
+            <template slot-scope="scope">
+              {{ scope.row.duration | formatDuration }}
+            </template>
+          </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="歌单" name="lists">
+      <el-tab-pane label="歌单" name="1000">
         <div class="items">
           <div class="item">
             <div class="img-wrap">
@@ -149,7 +161,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="MV" name="mv">
+      <el-tab-pane label="MV" name="1004">
         <div class="items">
           <div class="item">
             <div class="img-wrap">
@@ -256,50 +268,77 @@
               <div class="singer">余恩</div>
             </div>
           </div>
-
         </div>
       </el-tab-pane>
     </el-tabs>
+    <!-- 分页器 -->
+    <el-pagination
+      @current-change="handleCurrentChange"
+      background
+      layout="prev, pager, next"
+      :total="total"
+      :current-page="page"
+      :page-size="limit"
+    >
+    </el-pagination>
   </div>
 </template>
 
 <script>
+import { search } from '@/api/result';
+import { songUrl } from '@/api/discovery';
 export default {
   name: 'result',
   data() {
     return {
-      activeIndex: 'songs',
-      tableData: [
-        {
-          img:
-            'http://p3.music.126.net/sL4dfIANkKupkJvPipmd5g==/109951164736488659.jpg?param=120y120',
-          songName: '你要相信这不是最后一天',
-          subTitle: '电视剧《加油吧实习生》插曲',
-          singer: '华晨宇',
-          albumName: '你要相信这不是最后一天',
-          duration: '06:03',
-          hasMV: 0
-        },
-        {
-          img:
-            'http://p4.music.126.net/76Hpk_9ot2h2dozv5JbbYA==/109951164737016168.jpg?param=120y120',
-          songName: 'Tomorrow will be fine.',
-          singer: 'Sodagreen',
-          albumName: 'Tomorrow will be fine.',
-          duration: '04:59',
-          hasMV: 1
-        },
-        {
-          img:
-            'http://p4.music.126.net/QI_lE_SlqUXa51z56qcOSw==/109951164732550113.jpg?param=120y120',
-          songName: '误解',
-          singer: '戴佩妮',
-          albumName: '误解',
-          duration: '03:43',
-          hasMV: 1
-        }
-      ]
+      type: '1',
+      // 页容量
+      limit: 30,
+      // 页码
+      page: 1,
+      // 总条数
+      total: 0,
+      tableData: [],
+      keywords: this.$route.query.keywords
     };
+  },
+  created() {
+    this.searchResult();
+  },
+  methods: {
+    // 双击某一行
+    rowDbclick(row) {
+      songUrl({
+        id: row.id
+      }).then(res => {
+        // window.console.log(res)
+        // this.songUrl = res.data[0].url
+        this.$parent.url = res.data[0].url;
+      });
+    },
+    // 去mv页面
+    toMV(mvid) {
+      this.$router.push(`/mv?id=${mvid}`);
+    },
+    // 页码改变
+    handleCurrentChange(val) {
+      this.page = val;
+      this.searchResult();
+    },
+    searchResult() {
+      const { limit, type, keywords } = this;
+      search({
+        limit,
+        type,
+        keywords,
+        offset: (this.page - 1) * this.limit
+      }).then(res => {
+        // window.console.log(res)
+        // 根据类型不同
+        this.tableData = res.result.songs;
+        this.total = res.result.songCount;
+      });
+    }
   }
 };
 </script>
