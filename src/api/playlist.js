@@ -22,3 +22,17 @@ export function hotComments({id}){
     })
 }
 
+export function listComments({id,offset}){
+    return request({
+        url:"/comment/playlist",
+        method:"get",
+        params:{
+            id,
+            limit:5,
+            offset
+        }
+    })
+}
+
+
+

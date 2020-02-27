@@ -70,11 +70,17 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="评论(66)" name="2">
+      <el-tab-pane :label="`评论(${total + hotComments.length})`" name="2">
         <!-- 精彩评论 -->
         <div v-if="hotComments.length != 0" class="comment-wrap">
-          <p class="title">精彩评论<span class="number">(666)</span></p>
-          <div class="comments-wrap" v-for="item in hotComments" :key="item.commentId">
+          <p class="title">
+            精彩评论<span class="number">({{ hotComments.length }})</span>
+          </p>
+          <div
+            class="comments-wrap"
+            v-for="item in hotComments"
+            :key="item.commentId"
+          >
             <div class="item">
               <div class="icon-wrap">
                 <img :src="item.user.avatarUrl" alt="" />
@@ -97,65 +103,47 @@
         </div>
         <!-- 最新评论 -->
         <div class="comment-wrap">
-          <p class="title">最新评论<span class="number">(666)</span></p>
-          <div class="comments-wrap">
-            <div class="item">
+          <p class="title">
+            最新评论<span class="number">({{ total }})</span>
+          </p>
+          <div v-if="comments.length != 0" class="comments-wrap">
+            <div class="item" v-for="item in comments" :key="item.commentId">
               <div class="icon-wrap">
-                <img src="../assets/avatar.jpg" alt="" />
+                <img :src="item.user.avatarUrl" alt="" />
               </div>
               <div class="content-wrap">
                 <div class="content">
-                  <span class="name">爱斯基摩：</span>
-                  <span class="comment">谁说的，长大了依旧可爱哈</span>
+                  <span class="name">{{ item.user.nickname }}：</span>
+                  <span class="comment">{{ item.content }}</span>
                 </div>
-                <div class="re-content">
-                  <span class="name">小苹果：</span>
-                  <span class="comment">还是小时候比较可爱</span>
+                <div v-if="item.beReplied.length != 0" class="re-content">
+                  <span class="name"
+                    >{{ item.beReplied[0].user.nickname }}：</span
+                  >
+                  <span class="comment">{{ item.beReplied[0].content }}</span>
                 </div>
-                <div class="date">2020-02-12 17:26:11</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="icon-wrap">
-                <img src="../assets/avatar.jpg" alt="" />
-              </div>
-              <div class="content-wrap">
-                <div class="content">
-                  <span class="name">爱斯基摩：</span>
-                  <span class="comment">谁说的，长大了依旧可爱哈</span>
-                </div>
-                <div class="re-content">
-                  <span class="name">小苹果：</span>
-                  <span class="comment">还是小时候比较可爱</span>
-                </div>
-                <div class="date">2020-02-12 17:26:11</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="icon-wrap">
-                <img src="../assets/avatar.jpg" alt="" />
-              </div>
-              <div class="content-wrap">
-                <div class="content">
-                  <span class="name">爱斯基摩：</span>
-                  <span class="comment">谁说的，长大了依旧可爱哈</span>
-                </div>
-                <div class="re-content">
-                  <span class="name">小苹果：</span>
-                  <span class="comment">还是小时候比较可爱</span>
-                </div>
-                <div class="date">2020-02-12 17:26:11</div>
+                <div class="date">{{ item.time | formatTime }}</div>
               </div>
             </div>
           </div>
         </div>
+        <!-- 分页器 -->
+        <el-pagination
+          @current-change="handleCurrentChange"
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :current-page="page"
+          :page-size="5"
+        >
+        </el-pagination>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import { playlistDetail, hotComments } from '@/api/playlist';
+import { playlistDetail, hotComments, listComments } from '@/api/playlist';
 import { songUrl } from '@/api/discovery';
 import moment from 'moment';
 export default {
@@ -174,6 +162,14 @@ export default {
       // 热门评论
       hotComments: [],
       // 普通评论
+      comments: [],
+      // 分页相关数据
+      // 每页数据
+      limit: 20,
+      // 页码
+      page: 1,
+      // 总条数
+      total: 0
     };
   },
   filters: {
@@ -212,8 +208,27 @@ export default {
       // window.console.log(res)
       this.hotComments = res.hotComments;
     });
+    // 获取评论信息
+    this.getComments();
   },
   methods: {
+    // 获取歌曲评论
+    getComments() {
+      const { id } = this.$route.query;
+      // 获取歌曲评论
+      listComments({
+        id,
+        offset: (this.page - 1) * 5
+      }).then(res => {
+        this.total = res.total;
+        this.comments = res.comments;
+      });
+    },
+    // 页码改变
+    handleCurrentChange(val) {
+      this.page = val;
+      this.getComments();
+    },
     playMusic(id) {
       songUrl({
         id: id

@@ -340,12 +340,6 @@ export default {
       }
     }
   }
-  .el-pagination{
-    margin-top: 50px;
-    text-align: center;
-  }
-  .el-pagination.is-background .el-pager li:not(.disabled).active{
-    background-color: #dd6d60;
-  }
+
 }
 </style>
