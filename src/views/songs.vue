@@ -1,5 +1,5 @@
 <template>
-  <div class="songs-container">
+  <div class="songs-container" v-loading="loading">
     <div class="tab-bar">
       <span class="item" :class="{ active: type == 0 }" @click="type = 0"
         >全部</span
@@ -18,7 +18,7 @@
       >
     </div>
     <!-- 底部的table -->
-    <el-table class="song-table" :data="tableData">
+    <el-table class="song-table" :data="tableData" >
       <el-table-column type="index"></el-table-column>
       <el-table-column width="100">
         <template slot-scope="scope">
@@ -69,16 +69,20 @@ export default {
   data() {
     return {
       type: 0,
-      tableData: []
+      tableData: [],
+      // 是否加载
+      loading:false
     };
   },
   methods: {
     getData() {
+      this.loading = true;
       topSongs({
         type: this.type
       }).then(res => {
         // window.console.log(res);
         this.tableData = res.data;
+        this.loading = false
       });
     },
     playMusic(id) {
