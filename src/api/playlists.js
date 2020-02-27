@@ -10,3 +10,15 @@ export function highquality({ cat }) {
     }
   });
 }
+// 精选歌单
+export function topList({ cat, offset }) {
+  return request({
+    url: '/top/playlist',
+    method: 'get',
+    params: {
+      limit: 10,
+      offset,
+      cat
+    }
+  });
+}

@@ -1,7 +1,7 @@
 <template>
   <div class="playlists-container">
     <!-- 同步 -->
-    <div class="top-card">
+    <div class="top-card" v-if="listName">
       <div class="icon-wrap">
         <img :src="listCover" alt="" />
       </div>
@@ -10,8 +10,7 @@
         <div class="title">
           {{ listName }}
         </div>
-        <div class="info">{{ listDesc }}
-        </div>
+        <div class="info">{{ listDesc }}</div>
       </div>
       <img :src="listCover" alt="" class="bg" />
       <div class="bg-mask"></div>
@@ -19,133 +18,104 @@
     <div class="tab-container">
       <!-- tab栏 顶部 -->
       <div class="tab-bar">
-        <span class="item active">全部</span>
-        <span class="item">欧美</span>
-        <span class="item">华语</span>
-        <span class="item">流行</span>
-        <span class="item">说唱</span>
-        <span class="item">摇滚</span>
-        <span class="item">民谣</span>
-        <span class="item">电子</span>
-        <span class="item">轻音乐</span>
-        <span class="item">影视原声</span>
-        <span class="item">ACG</span>
-        <span class="item">怀旧</span>
-        <span class="item">治愈</span>
-        <span class="item">旅行</span>
+        <span
+          class="item"
+          :class="{ active: cat == '全部' }"
+          @click="cat = '全部'"
+          >全部</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '欧美' }"
+          @click="cat = '欧美'"
+          >欧美</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '华语' }"
+          @click="cat = '华语'"
+          >华语</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '流行' }"
+          @click="cat = '流行'"
+          >流行</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '说唱' }"
+          @click="cat = '说唱'"
+          >说唱</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '摇滚' }"
+          @click="cat = '摇滚'"
+          >摇滚</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '民谣' }"
+          @click="cat = '民谣'"
+          >民谣</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '电子' }"
+          @click="cat = '电子'"
+          >电子</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '轻音乐' }"
+          @click="cat = '轻音乐'"
+          >轻音乐</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '影视原声' }"
+          @click="cat = '影视原声'"
+          >影视原声</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == 'ACG' }"
+          @click="cat = 'ACG'"
+          >ACG</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '怀旧' }"
+          @click="cat = '怀旧'"
+          >怀旧</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '治愈' }"
+          @click="cat = '治愈'"
+          >治愈</span
+        >
+        <span
+          class="item"
+          :class="{ active: cat == '旅行' }"
+          @click="cat = '旅行'"
+          >旅行</span
+        >
       </div>
       <!-- tab的内容区域 -->
       <div class="tab-content">
         <div class="items">
-          <div class="item">
+          <div class="item" v-for="item in playList" :key="item.id">
             <div class="img-wrap">
               <div class="num-wrap">
                 播放量:
-                <span class="num">66892</span>
+                <span class="num">{{ item.playCount | formatCount }}</span>
               </div>
-              <img src="../assets/cover.jpg" alt="" />
+              <img :src="item.coverImgUrl" alt="" />
               <span class="iconfont icon-play"></span>
             </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
+            <p class="name">{{ item.description }}</p>
           </div>
         </div>
       </div>
@@ -164,7 +134,7 @@
 </template>
 
 <script>
-import { highquality } from '@/api/playlists';
+import { highquality, topList } from '@/api/playlists';
 export default {
   name: 'recommend',
   data() {
@@ -172,31 +142,52 @@ export default {
       // 歌单分类
       cat: '全部',
       // 顶部的标题
-      listName:"",
+      listName: '',
       // 顶部的描述
-      listDesc:'',
+      listDesc: '',
       // 顶部的封面
-      listCover:'',
+      listCover: '',
       // 总条数
-      total:0,
+      total: 0,
       // 页码
-      page:1
+      page: 1,
+      // 歌单列表
+      playList: []
     };
   },
+  watch: {
+    cat() {
+      this.getData();
+    }
+  },
   created() {
-    highquality({ cat: this.cat }).then(res => {
-      // window.console.log(res);
-      this.listName = res.playlists[0].name
-      this.listDesc = res.playlists[0].description
-      this.listCover = res.playlists[0].coverImgUrl
-    });
+    this.getData();
   },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    // 获取歌单信息
+    getData() {
+      highquality({ cat: this.cat }).then(res => {
+        if (res.playlists.length != 0) {
+          this.listName = res.playlists[0].name;
+          this.listDesc = res.playlists[0].description;
+          this.listCover = res.playlists[0].coverImgUrl;
+        } else {
+          this.listName = '';
+        }
+      });
+      // 底部的歌单信息
+      topList({
+        cat: this.cat,
+        offset: (this.page - 1) * 10
+      }).then(res => {
+        // window.console.log(res);
+        this.playList = res.playlists;
+        this.total = res.total;
+      });
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.page = val;
+      this.getData()
     }
   }
 };
