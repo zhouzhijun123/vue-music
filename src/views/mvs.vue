@@ -76,7 +76,7 @@
             <div class="singer">余恩</div>
           </div>
         </div>
-            <div class="item">
+        <div class="item">
           <div class="img-wrap">
             <img src="../assets/mvCover.jpg" alt="" />
             <div class="num-wrap">
@@ -88,7 +88,8 @@
             <div class="name">HEYNA</div>
             <div class="singer">余恩</div>
           </div>
-        </div>    <div class="item">
+        </div>
+        <div class="item">
           <div class="img-wrap">
             <img src="../assets/mvCover.jpg" alt="" />
             <div class="num-wrap">
@@ -148,9 +149,9 @@
 <script>
 export default {
   name: 'mvs',
-  methods:{
-    toMv(id){
-      this.$router.push(`/mv?id=${id}`)
+  methods: {
+    toMv(id) {
+      this.$router.push(`/mv?id=${id}`);
     }
   }
 };

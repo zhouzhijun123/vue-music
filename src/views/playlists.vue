@@ -3,28 +3,17 @@
     <!-- 同步 -->
     <div class="top-card">
       <div class="icon-wrap">
-        <img src="../assets/listCover.jpg" alt="" />
+        <img :src="listCover" alt="" />
       </div>
       <div class="content-wrap">
         <div class="tag">精品歌单</div>
         <div class="title">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, laborum.
+          {{ listName }}
         </div>
-        <div class="info">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-          velit suscipit cumque incidunt ad vitae quos dicta temporibus, at,
-          labore harum libero. Officiis commodi illo, minus sed ad ab provident,
-          maxime nobis culpa esse iste quibusdam! Doloribus itaque quia
-          recusandae? Incidunt cumque non et minus magni dolores repudiandae
-          quia quas esse ipsam labore doloremque, maxime nobis odio ab.
-          Distinctio nemo nostrum numquam dolores labore laboriosam doloremque
-          harum vero aliquam sit et quam laborum magnam animi, quae beatae
-          fugiat sapiente! Perspiciatis libero atque ratione quam reprehenderit
-          numquam distinctio. Maxime reprehenderit, dicta placeat enim
-          laudantium voluptatem, ab eveniet nulla asperiores minima quidem!
+        <div class="info">{{ listDesc }}
         </div>
       </div>
-      <img src="../assets/listCover.jpg" alt="" class="bg" />
+      <img :src="listCover" alt="" class="bg" />
       <div class="bg-mask"></div>
     </div>
     <div class="tab-container">
@@ -163,21 +152,44 @@
     </div>
     <!-- 分页器 -->
     <el-pagination
-      @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       background
       layout="prev, pager, next"
-      :total="1000"
+      :total="total"
+      :page-size="10"
+      :current-page="page"
     >
     </el-pagination>
   </div>
 </template>
 
 <script>
+import { highquality } from '@/api/playlists';
 export default {
   name: 'recommend',
   data() {
-    return {};
+    return {
+      // 歌单分类
+      cat: '全部',
+      // 顶部的标题
+      listName:"",
+      // 顶部的描述
+      listDesc:'',
+      // 顶部的封面
+      listCover:'',
+      // 总条数
+      total:0,
+      // 页码
+      page:1
+    };
+  },
+  created() {
+    highquality({ cat: this.cat }).then(res => {
+      // window.console.log(res);
+      this.listName = res.playlists[0].name
+      this.listDesc = res.playlists[0].description
+      this.listCover = res.playlists[0].coverImgUrl
+    });
   },
   methods: {
     handleSizeChange(val) {
@@ -328,7 +340,6 @@ export default {
             }
           }
           .name {
-            
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -340,6 +351,5 @@ export default {
       }
     }
   }
-
 }
 </style>
