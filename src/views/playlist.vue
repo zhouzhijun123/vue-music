@@ -145,7 +145,7 @@
 <script>
 import { playlistDetail, listComments } from '@/api/playlist';
 import { songUrl } from '@/api/discovery';
-import moment from 'moment';
+import moment from 'moment'
 export default {
   name: 'playlist',
   data() {
@@ -173,18 +173,7 @@ export default {
     };
   },
   filters: {
-    formatDuration(dt) {
-      // 转分
-      let min = Math.ceil(dt / 1000 / 60);
-      min = min < 10 ? '0' + min : min;
-      // 秒
-      let sec = Math.ceil((dt / 1000) % 60);
-      sec = sec < 10 ? '0' + sec : sec;
-      return min + ':' + sec;
-    },
-    formatTime(time) {
-      return moment(time).format('YYYY-MM-DD hh:mm:ss');
-    }
+  
   },
   created() {
     const { id } = this.$route.query;
