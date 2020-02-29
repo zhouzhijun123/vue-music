@@ -102,7 +102,7 @@
               <span class="time">{{ item.duration | formatDuration }}</span>
             </div>
             <div class="info-wrap">
-              <div class="name">{{ item.briefDesc }}</div>
+              <div class="name">{{ item.name }}</div>
               <div class="singer">{{ item.artistName }}</div>
             </div>
           </div>
