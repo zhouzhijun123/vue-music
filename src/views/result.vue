@@ -6,46 +6,43 @@
     </div>
     <el-tabs v-model="type">
       <el-tab-pane label="歌曲" name="1">
-        <el-table
-          stripe
-          class="song-table"
-          :data="songList"
-          @row-dblclick="rowDbclick"
-        >
-          <el-table-column type="index"></el-table-column>
-          <el-table-column width="280" label="音乐标题">
-            <template slot-scope="scope">
-              <div class="song-wrap">
-                <div class="name-wrap">
-                  <span>{{ scope.row.name }}</span>
-                  <span
-                    v-if="scope.row.mvid != 0"
-                    class="iconfont icon-mv"
-                    @click="toMV(scope.row.mvid)"
-                  ></span>
+        <table class="el-table">
+          <thead>
+            <th></th>
+            <th>音乐标题</th>
+            <th>歌手</th>
+            <th>专辑</th>
+            <th>时长</th>
+          </thead>
+          <tbody>
+            <tr
+              class="el-table__row"
+              v-for="(item, index) in songList"
+              :key="item.id"
+              @dblclick="rowDbclick(item.id)"
+            >
+              <td>{{ index + 1 }}</td>
+              <td>
+                <div class="song-wrap">
+                  <div class="name-wrap">
+                    <span class="name">{{ item.name }}</span>
+                    <span
+                      v-if="item.mvid != 0"
+                      class="iconfont icon-mv"
+                      @click="toMV(item.mvid)"
+                    ></span>
+                  </div>
+                  <span class="sub-name" v-if="item.alias.length != 0">{{
+                    item.alias[0]
+                  }}</span>
                 </div>
-                <span v-if="scope.row.alias.length != 0">{{
-                  scope.row.alias[0]
-                }}</span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column width="280" label="歌手">
-            <template slot-scope="scope">
-              {{ scope.row.artists[0].name }}
-            </template>
-          </el-table-column>
-          <el-table-column width="280" label="专辑">
-            <template slot-scope="scope">
-              {{ scope.row.album.name }}
-            </template>
-          </el-table-column>
-          <el-table-column label="时长">
-            <template slot-scope="scope">
-              {{ scope.row.duration | formatDuration }}
-            </template>
-          </el-table-column>
-        </el-table>
+              </td>
+              <td>{{ item.artists[0].name }}</td>
+              <td>{{ item.album.name }}</td>
+              <td>{{ item.duration | formatDuration }}</td>
+            </tr>
+          </tbody>
+        </table>
       </el-tab-pane>
       <el-tab-pane label="歌单" name="1000">
         <div class="items">
@@ -68,7 +65,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="MV" name="1004">
-        <div class="items">
+        <div class="items mv">
           <div
             class="item"
             v-for="item in mvList"
@@ -125,7 +122,12 @@ export default {
     };
   },
   watch: {
-    type: 'searchResult',
+    type: [
+      function() {
+        this.limit = this.type == '1004' ? 12 : 15;
+      },
+      'searchResult'
+    ],
     '$route.query.keywords': 'searchResult'
   },
   created() {
@@ -136,9 +138,9 @@ export default {
       this.$router.push(`/playlist?id=${id}`);
     },
     // 双击某一行
-    rowDbclick(row) {
+    rowDbclick(id) {
       songUrl({
-        id: row.id
+        id
       }).then(res => {
         // window.console.log(res)
         // this.songUrl = res.data[0].url
@@ -186,105 +188,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.result-container {
-  .title-wrap {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 30px;
-    .title {
-      margin-right: 10px;
-    }
-    .sub-title {
-      font-size: 15px;
-      color: #bebebe;
-    }
-  }
-  .el-tabs__item {
-    font-size: 18px;
-  }
-  .el-table td,
-  .el-table th.is-leaf {
-    border-bottom: none;
-  }
-  .items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    .item {
-      width: 200px;
-      cursor: pointer;
-      margin-right: 20px;
-      margin-bottom: 20px;
-      .img-wrap {
-        width: 100%;
-        position: relative;
-        > .icon-play {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 40px;
-          height: 40px;
-          color: #dd6d60;
-          font-size: 20px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(255, 255, 255, 0.8);
-          opacity: 0;
-          &::before {
-            transform: translateX(3px);
-          }
-        }
-        &:hover > .icon-play {
-          opacity: 1;
-        }
-        img {
-          width: 100%;
-          border-radius: 5px;
-        }
-        .num-wrap {
-          position: absolute;
-          color: white;
-          top: 0;
-          right: 0;
-          display: flex;
-          align-items: center;
-          font-size: 15px;
-          padding-right: 5px;
-          padding-top: 2px;
-          .icon-play {
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            margin-right: 5px;
-          }
-        }
-        .time {
-          position: absolute;
-          bottom: 5px;
-          right: 5px;
-          color: white;
-          font-size: 15px;
-        }
-      }
-      .name {
-        font-size: 15px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-      }
-      .info-wrap {
-        .singer {
-          font-size: 15px;
-          color: #bebebe;
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
