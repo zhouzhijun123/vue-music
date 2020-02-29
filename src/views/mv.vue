@@ -383,6 +383,7 @@ export default {
             }
           }
           .info-wrap {
+            flex:1;
             .name {
               font-size: 15px;
             }
