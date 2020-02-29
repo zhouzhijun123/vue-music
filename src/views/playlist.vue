@@ -64,7 +64,7 @@
               <td>
                 {{ item.al.name }}
               </td>
-              <td>{{ item.duration | formatDuration }}</td>
+              <td>{{ item.dt | formatDuration }}</td>
             </tr>
           </tbody>
         </table>

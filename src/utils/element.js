@@ -6,6 +6,8 @@ import {
   Pagination,
   Message,
   Tabs,
+  TableColumn,
+  Table,
   TabPane
 } from 'element-ui';
 
@@ -15,6 +17,8 @@ export default {
     Vue.use(Loading);
     Vue.use(Carousel);
     Vue.use(CarouselItem);
+    Vue.use(Table);
+    Vue.use(TableColumn);
     Vue.use(Pagination);
     Vue.use(Tabs);
     Vue.use(TabPane);
