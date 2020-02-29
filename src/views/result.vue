@@ -1,5 +1,5 @@
 <template>
-  <div class="result-container">
+  <div class="result-container" ref="container">
     <div class="title-wrap">
       <h2 class="title">{{ $route.query.keywords }}</h2>
       <span class="sub-title">找到{{ total }}个结果</span>
@@ -114,14 +114,14 @@ export default {
     return {
       type: '1',
       // 页容量
-      limit: 30,
+      limit: 15,
       // 页码
       page: 1,
       // 总条数
       total: 0,
       songList: [],
       playList: [],
-      mvList: [],
+      mvList: []
     };
   },
   watch: {
@@ -161,7 +161,7 @@ export default {
         limit,
         type,
         keywords,
-        offset: (this.page - 1) * this.limit
+        offset: (this.page - 1) * limit
       }).then(res => {
         // window.console.log(res)
         // 根据类型不同
