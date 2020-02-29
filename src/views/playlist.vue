@@ -29,46 +29,45 @@
     </div>
     <el-tabs v-model="activeIndex">
       <el-tab-pane label="歌曲列表" name="1">
-        <el-table class="song-table" :data="tableData">
-          <el-table-column type="index"></el-table-column>
-          <el-table-column width="100" label="">
-            <template slot-scope="scope">
-              <div class="img-wrap" @click="playMusic(scope.row.id)">
-                <img :src="scope.row.al.picUrl" alt="" />
-                <span class="iconfont icon-play"></span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="音乐标题">
-            <template slot-scope="scope">
-              <div class="song-wrap">
-                <div class="name-wrap">
-                  <span>{{ scope.row.name }}</span>
-                  <span
-                    v-if="scope.row.mv != 0"
-                    class="iconfont icon-mv"
-                  ></span>
+        <table class="el-table playlit-table">
+          <thead>
+            <th></th>
+            <th></th>
+            <th>音乐标题</th>
+            <th>歌手</th>
+            <th>专辑</th>
+            <th>时长</th>
+          </thead>
+          <tbody>
+            <tr
+              class="el-table__row"
+              v-for="(item, index) in tableData"
+              :key="item.id"
+            >
+              <td>{{ index + 1 }}</td>
+              <td>
+                <div class="img-wrap" @click="playMusic(item.id)">
+                  <img :src="item.al.picUrl" alt="" />
+                  <span class="iconfont icon-play"></span>
                 </div>
-                <span>{{ scope.row.subTitle }}</span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column width="280" label="歌手">
-            <template slot-scope="scope">
-              {{ scope.row.ar[0].name }}
-            </template>
-          </el-table-column>
-          <el-table-column width="280" prop="albumName" label="专辑">
-            <template slot-scope="scope">
-              {{ scope.row.al.name }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="duration" label="时长">
-            <template slot-scope="scope">
-              {{ scope.row.dt | formatDuration }}
-            </template>
-          </el-table-column>
-        </el-table>
+              </td>
+              <td>
+                <div class="song-wrap">
+                  <div class="name-wrap">
+                    <span>{{ item.name }}</span>
+                    <span v-if="item.mv != 0" class="iconfont icon-mv"></span>
+                  </div>
+                  <span>{{ item.subTitle }}</span>
+                </div>
+              </td>
+              <td>{{ item.ar[0].name }}</td>
+              <td>
+                {{ item.al.name }}
+              </td>
+              <td>{{ item.duration | formatDuration }}</td>
+            </tr>
+          </tbody>
+        </table>
       </el-tab-pane>
       <el-tab-pane :label="`评论(${total + hotComments.length})`" name="2">
         <!-- 精彩评论 -->
@@ -145,7 +144,7 @@
 <script>
 import { playlistDetail, listComments } from '@/api/playlist';
 import { songUrl } from '@/api/discovery';
-import moment from 'moment'
+import moment from 'moment';
 export default {
   name: 'playlist',
   data() {
@@ -172,9 +171,7 @@ export default {
       total: 0
     };
   },
-  filters: {
-  
-  },
+  filters: {},
   created() {
     const { id } = this.$route.query;
     playlistDetail({
@@ -191,7 +188,7 @@ export default {
       this.tags = res.playlist.tags;
       this.createTime = moment(res.playlist.createTime).format('YYYY-MM-DD');
     });
-    
+
     // 获取评论信息
     this.getComments();
   },
@@ -227,6 +224,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

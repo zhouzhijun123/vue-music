@@ -18,46 +18,45 @@
       >
     </div>
     <!-- 底部的table -->
-    <el-table class="song-table" :data="tableData" >
-      <el-table-column type="index"></el-table-column>
-      <el-table-column width="100">
-        <template slot-scope="scope">
-          <div class="img-wrap">
-            <img :src="scope.row.album.picUrl" alt="" />
-            <span
-              class="iconfont icon-play"
-              @click="playMusic(scope.row.id)"
-            ></span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column width="280">
-        <template slot-scope="scope">
-          <div class="song-wrap">
-            <div class="name-wrap">
-              <span>{{ scope.row.name }}</span>
-              <span v-if="scope.row.mvid != 0" class="iconfont icon-mv"></span>
+    <table class="el-table playlit-table">
+      <thead>
+        <th></th>
+        <th></th>
+        <th>音乐标题</th>
+        <th>歌手</th>
+        <th>专辑</th>
+        <th>时长</th>
+      </thead>
+      <tbody>
+        <tr
+          class="el-table__row"
+          v-for="(item, index) in tableData"
+          :key="item.id"
+        >
+          <td>{{ index + 1 }}</td>
+          <td>
+            <div class="img-wrap" @click="playMusic(item.id)">
+              <img :src="item.album.picUrl" alt="" />
+              <span class="iconfont icon-play"></span>
             </div>
-            <span>{{ scope.row.subTitle }}</span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column width="280">
-        <template slot-scope="scope">
-          {{ scope.row.artists[0].name }}
-        </template>
-      </el-table-column>
-      <el-table-column width="280">
-        <template slot-scope="scope">
-          {{ scope.row.album.name }}
-        </template>
-      </el-table-column>
-      <el-table-column>
-        <template slot-scope="scope">
-          {{ scope.row.duration | formatDuration }}
-        </template>
-      </el-table-column>
-    </el-table>
+          </td>
+          <td>
+            <div class="song-wrap">
+              <div class="name-wrap">
+                <span>{{ item.name }}</span>
+                <span v-if="item.mv != 0" class="iconfont icon-mv"></span>
+              </div>
+              <span>{{ item.subTitle }}</span>
+            </div>
+          </td>
+          <td>{{ item.artists[0].name }}</td>
+          <td>
+            {{ item.album.name }}
+          </td>
+          <td>{{ item.duration | formatDuration }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -71,7 +70,7 @@ export default {
       type: 0,
       tableData: [],
       // 是否加载
-      loading:false
+      loading: false
     };
   },
   methods: {
@@ -82,7 +81,7 @@ export default {
       }).then(res => {
         // window.console.log(res);
         this.tableData = res.data;
-        this.loading = false
+        this.loading = false;
       });
     },
     playMusic(id) {
@@ -106,6 +105,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

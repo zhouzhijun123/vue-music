@@ -3,8 +3,6 @@ import {
   Loading,
   Carousel,
   CarouselItem,
-  Table,
-  TableColumn,
   Pagination,
   Message,
   Tabs,
