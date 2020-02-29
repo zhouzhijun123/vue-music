@@ -33,7 +33,7 @@ export default {
       if(!this.query){
         this.$message.warning('请输入查询内容')
       }else{
-        this.$router.push(`/result?keywords=${this.query}`)
+        this.$router.push(`/result?keywords=${this.query}`).catch(e=>e)
       }
     }
   },

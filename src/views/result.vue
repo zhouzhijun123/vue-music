@@ -1,7 +1,7 @@
 <template>
   <div class="result-container">
     <div class="title-wrap">
-      <h2 class="title">{{ keywords }}</h2>
+      <h2 class="title">{{ $route.query.keywords }}</h2>
       <span class="sub-title">找到{{ total }}个结果</span>
     </div>
     <el-tabs v-model="type">
@@ -122,11 +122,11 @@ export default {
       songList: [],
       playList: [],
       mvList: [],
-      keywords: this.$route.query.keywords
     };
   },
   watch: {
-    type: 'searchResult'
+    type: 'searchResult',
+    '$route.query.keywords': 'searchResult'
   },
   created() {
     this.searchResult();
@@ -155,7 +155,8 @@ export default {
       this.searchResult();
     },
     searchResult() {
-      const { limit, type, keywords } = this;
+      const { limit, type } = this;
+      const { keywords } = this.$route.query;
       search({
         limit,
         type,
