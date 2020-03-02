@@ -1,5 +1,5 @@
 <template>
-  <div class="songs-container" v-loading="loading">
+  <div class="songs-container" >
     <div class="tab-bar">
       <span class="item" :class="{ active: type == 0 }" @click="type = 0"
         >全部</span
@@ -69,19 +69,15 @@ export default {
     return {
       type: 0,
       tableData: [],
-      // 是否加载
-      loading: false
+    
     };
   },
   methods: {
     getData() {
-      this.loading = true;
       topSongs({
         type: this.type
       }).then(res => {
-        // window.console.log(res);
         this.tableData = res.data;
-        this.loading = false;
       });
     },
     playMusic(id) {
