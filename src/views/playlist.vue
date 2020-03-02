@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import { playlistDetail, listComments } from '@/api/playlist';
+import { playlistDetail, listComments, hotComments } from '@/api/playlist';
 import { songUrl } from '@/api/discovery';
 import moment from 'moment';
 export default {
@@ -184,6 +184,12 @@ export default {
       this.tags = res.playlist.tags;
       this.createTime = moment(res.playlist.createTime).format('YYYY-MM-DD');
     });
+    // 获取热门评论
+    hotComments({
+      id
+    }).then(res => {
+      this.hotComments = res.hotComments;
+    });
 
     // 获取评论信息
     this.getComments();
@@ -198,7 +204,6 @@ export default {
         offset: (this.page - 1) * 5
       }).then(res => {
         this.total = res.total;
-        this.hotComments = res.hotComments;
         this.comments = res.comments;
       });
     },
