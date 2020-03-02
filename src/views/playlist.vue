@@ -11,10 +11,6 @@
           <span class="name">{{ nickname }}</span>
           <span class="time">{{ createTime }} 创建</span>
         </div>
-        <div class="play-wrap">
-          <span class="iconfont icon-circle-play"></span>
-          <span class="text">播放全部</span>
-        </div>
         <div class="tag-wrap">
           <span class="title">标签:</span>
           <ul>

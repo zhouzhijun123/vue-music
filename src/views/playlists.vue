@@ -106,7 +106,7 @@
       <!-- tab的内容区域 -->
       <div class="tab-content">
         <div class="items">
-          <div class="item" v-for="item in playList" :key="item.id" @click="toPlayList(item.id)">
+          <div class="item" v-for="(item,index) in playList" :key="index" @click="toPlayList(item.id)">
             <div class="img-wrap">
               <div class="num-wrap">
                 播放量:
