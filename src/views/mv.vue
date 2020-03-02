@@ -19,10 +19,10 @@
           <p class="desc">{{ desc }}</p>
         </div>
       </div>
-      <!-- 精彩评论 -->
+      <!-- 热门评论 -->
       <div v-if="hotComments.length != 0" class="comment-wrap">
         <p class="title">
-          精彩评论<span class="number">({{ hotComments.length }})</span>
+          热门评论<span class="number">({{ hotComments.length }})</span>
         </p>
         <div
           class="comments-wrap"
@@ -200,6 +200,7 @@ export default {
   // 侦听器
   watch:{
     '$route.query.id'(){
+      this.page = 1;
       this.getInfo()
     }
   },
