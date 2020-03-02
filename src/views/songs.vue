@@ -37,14 +37,14 @@
           <td>
             <div class="img-wrap" @click="playMusic(item.id)">
               <img :src="item.album.picUrl" alt="" />
-              <span class="iconfont icon-play"></span>
+              <span  class="iconfont icon-play" ></span>
             </div>
           </td>
           <td>
             <div class="song-wrap">
               <div class="name-wrap">
                 <span>{{ item.name }}</span>
-                <span v-if="item.mv != 0" class="iconfont icon-mv"></span>
+                <span v-if="item.mvid != 0" class="iconfont icon-mv" @click='toMV(item.mvid)'></span>
               </div>
               <span>{{ item.subTitle }}</span>
             </div>
@@ -73,6 +73,9 @@ export default {
     };
   },
   methods: {
+    toMV(id){
+      this.$router.push(`/mv?id=${id}`)
+    },
     getData() {
       topSongs({
         type: this.type

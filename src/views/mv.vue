@@ -9,7 +9,9 @@
       <!-- mv信息 -->
       <div class="info-wrap">
         <div class="singer-info">
-          <img :src="artistCover" alt="" />
+          <div class='avatar-wrap'>
+            <img :src="artistCover" alt="" />
+          </div>
           <span class="name">{{ artistName }}</span>
         </div>
         <div class="mv-info">
@@ -193,23 +195,21 @@ export default {
       });
     },
     // 切换mv
-    toMV(id){
-      this.$router.push(`/mv?id=${id}`)
+    toMV(id) {
+      this.$router.push(`/mv?id=${id}`);
     }
   },
   // 侦听器
-  watch:{
-    '$route.query.id'(){
+  watch: {
+    '$route.query.id'() {
       this.page = 1;
-      this.getInfo()
+      this.getInfo();
     }
   },
   created() {
-    this.getInfo()
+    this.getInfo();
   }
 };
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
