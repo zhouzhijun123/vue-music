@@ -51,7 +51,8 @@
                 <div class="song-wrap">
                   <div class="name-wrap">
                     <span>{{ item.name }}</span>
-                    <span v-if="item.mv != 0" class="iconfont icon-mv"></span>
+                    <!-- mv图标 -->
+                    <span v-if="item.mv != 0" @click="toMV(item.mv)" class="iconfont icon-mv"></span>
                   </div>
                   <span>{{ item.subTitle }}</span>
                 </div>
@@ -66,10 +67,10 @@
         </table>
       </el-tab-pane>
       <el-tab-pane :label="`评论(${total + hotComments.length})`" name="2">
-        <!-- 精彩评论 -->
+        <!-- 热门评论 -->
         <div v-if="hotComments.length != 0" class="comment-wrap">
           <p class="title">
-            精彩评论<span class="number">({{ hotComments.length }})</span>
+            热门评论<span class="number">({{ hotComments.length }})</span>
           </p>
           <div
             class="comments-wrap"
@@ -195,6 +196,9 @@ export default {
     this.getComments();
   },
   methods: {
+    toMV(id){
+      this.$router.push(`/mv?id=${id}`)
+    },
     // 获取歌曲评论
     getComments() {
       const { id } = this.$route.query;
