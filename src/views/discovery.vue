@@ -30,8 +30,7 @@
         最新音乐
       </h3>
       <div class="items">
-        <div class="item" v-for="(item, index) in newsong" :key="item.id">
-          <span class="index">{{ index + 1 }}</span>
+        <div class="item" v-for="(item, index) in newsong" :key="index">
           <div class="img-wrap">
             <img :src="item.picUrl" alt="" />
             <span @click="playMusic(item.id)" class="iconfont icon-play"></span>
