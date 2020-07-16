@@ -26,6 +26,12 @@
             最新MV
           </router-link>
         </li>
+        <li>
+          <router-link to="/love">
+            <span class="iconfont icon-music"></span>
+            十里桑田
+          </router-link>
+        </li>
       </ul>
     </div>
     <div class="main">

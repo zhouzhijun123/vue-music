@@ -20,6 +20,7 @@ import songs from '@/views/songs.vue';
 import mvs from '@/views/mvs.vue';
 import mv from '@/views/mv.vue';
 import result from '@/views/result.vue';
+import love from '@/views/love.vue';
 
 /**
  * 重写路由的push方法
@@ -70,6 +71,10 @@ const router = new VueRouter({
     {
       path: '/result',
       component: result
+    },
+    {
+      path: '/love',
+      component: love
     }
   ]
 });
