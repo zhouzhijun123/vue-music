@@ -27,7 +27,7 @@ https://binaryify.github.io/NeteaseCloudMusicApi
 - destroyed：组件销毁时触发，vue实例解除了事件监听以及和dom的绑定（无响应了），但DOM节点依旧存在
 ### scss
 [scss cover sass](https://blog.csdn.net/AlisaClass/article/details/90756027)
-### v-* 命令
+### v-*命令
 [v-命令](https://share.mubu.com/doc/BRo2FU9zp9)
 ###ES6语法
 [项目涉及的es6语法](https://share.mubu.com/doc/1gZK8iyntp9)
