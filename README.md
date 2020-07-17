@@ -29,7 +29,7 @@ https://binaryify.github.io/NeteaseCloudMusicApi
 [scss cover sass](https://blog.csdn.net/AlisaClass/article/details/90756027)
 ### v-*命令
 [v-命令](https://share.mubu.com/doc/BRo2FU9zp9)
-###ES6语法
+### ES6语法
 [项目涉及的es6语法](https://share.mubu.com/doc/1gZK8iyntp9)
 [ES6入门语法(个人笔记，可能不太完美)](https://blog.csdn.net/weixin_40422539/article/details/102636215)
 ### 单组件开发
@@ -63,6 +63,52 @@ style 标签中写样式
 App.vue中 使用 import 导入 播放器组件
 在 components 中添加（注册） 播放器组件
 页面上使用 注册的名字 当做标签名即可使用 播放器组件
+### vue router
+#### 安装
+在项目的 根目录 打开 终端
+通过命令 npm install vue-router 下载
+main.js 中
+- 导入
+- use一下
+- 创建路由
+- 挂载到Vue实例上
+#### 配置规则
+通过 routes 属性 配置 地址 和 路由管理的 组件 关系
+main.js 中
+- 导入组件
+- routes 属性中进行配置关系
+- path:设置地址
+- component：设置组件
+- 可以配置 多个
+#### 路由出口
+希望匹配到的组件显示在哪里，就在哪里设置一个 router-view 标签
+多配置几组对应关系
+- discovery:发现音乐
+- playlists:推荐歌单
+- songs:	最新音乐
+- mvs:	最新mv
+#### 声明式导航
+通过 router-link 标签 设置 to 属性为地址 可以实现点击切换
+#### 编程式导航
+组件中通过 this.$router.push(地址) 可以通过代码实现切换
+#### 路由传参
+在地址的后面 写上 ？分隔
+通过 key=value&key2=value 的方式添加参数
+组件中通过 this.$route.query 访问对应的 key 即可获取数据
+
+### Element-ui
+组件中通过 this.$route.query 访问对应的 key 即可获取数据
+很多常用的功能已经写好了，直接用
+#### 安装
+在项目的 根目录 打开 终端
+通过命令 npm i element-ui 下载
+main.js 中
+- 导入 Element-ui
+- 导入 样式
+- use一下
+#### 使用
+[看文档](https://element.eleme.cn/#/zh-CN/component/carousel)
+
 
 
 
