@@ -2,17 +2,17 @@
 > 网页版本的播放器
 
 ## 项目页面组成
-App
-  top
+  top:顶部
+  
   index
-    discovery
-    love
-    mv
-    mvs
-    playlist
-    playlists
-    result
-    songs
+    - discovery：发现音乐组件
+    - love：十里桑田组件
+    - mv：mv详情页
+    - mvs：最新mv组件
+    - playlist：歌单详情页
+    - playlists：推荐歌单组件
+    - result：搜索结果页组件
+    - songs：最新音乐组件
 ## 感谢
 https://github.com/sl1673495/vue-netease-music
 
