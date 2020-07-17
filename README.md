@@ -1,6 +1,18 @@
 # webmusic
 > 网页版本的播放器
 
+## 项目页面组成
+App
+  top
+  index
+    discovery
+    love
+    mv
+    mvs
+    playlist
+    playlists
+    result
+    songs
 ## 感谢
 https://github.com/sl1673495/vue-netease-music
 
