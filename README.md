@@ -1,18 +1,17 @@
 # webmusic
-> 网页版本的播放器
+> 网页版本的播放器 [传送门](http://47.112.160.14:8080/vue-music2/)
 
 ## 项目页面组成
-  top:顶部
-  
-  index
-    - discovery：发现音乐组件
-    - love：十里桑田组件
-    - mv：mv详情页
-    - mvs：最新mv组件
-    - playlist：歌单详情页
-    - playlists：推荐歌单组件
-    - result：搜索结果页组件
-    - songs：最新音乐组件
+top:顶部
+index
+- discovery：发现音乐组件
+- love：十里桑田组件
+- mv：mv详情页
+- mvs：最新mv组件
+- playlist：歌单详情页
+- playlists：推荐歌单组件
+- result：搜索结果页组件
+- songs：最新音乐组件
 ## 感谢
 https://github.com/sl1673495/vue-netease-music
 
