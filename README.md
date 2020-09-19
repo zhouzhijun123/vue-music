@@ -121,14 +121,14 @@ main.js 中,
 [看文档](https://element.eleme.cn/#/zh-CN/component/carousel)
 
 ### props & emit（父子组件通信）
-props 在 子组件中 设置，作用是定义允许 父组件传入的值，
+props 在 子组件中 设置，作用是定义允许 父组件传入的值，t
 emit 在 子组件 中触发，通过他可以触发父组件中注册的事件，甚至 传递参数，
 
 ## 部署应用到服务器
 我个人的做法是
 - npm run build 得到 dist文件夹
 - 复制文件夹到tomcat服务器的webapps目录下，再运行一下startup.bat即可
-至于tomcar服务器怎么配置，这里就不多讲诉了
+至于tomcat服务器怎么配置，这里就不多讲诉了
 
 
 
